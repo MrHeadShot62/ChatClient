@@ -7,7 +7,7 @@ import com.mrheadshot62.api.types.PermissionPacket;
 /**
  * Created by novak on 05.01.2017.
  */
-class MainHandler {
+public class MainHandler {
     private Packet[] packets;
     private PermissionPacket permisson;
 
