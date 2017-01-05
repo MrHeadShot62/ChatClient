@@ -1,5 +1,6 @@
 package org.arcticsoft.bluebearlive.core.iLogic;
 
+import org.arcticsoft.bluebearlive.core.logic.ErrorType;
 import org.arcticsoft.bluebearlive.core.logic.User;
 
 /**
@@ -8,8 +9,6 @@ import org.arcticsoft.bluebearlive.core.logic.User;
 
 public interface IErrorCore {
 
-    boolean checkError();
-
     int getErrorCode();
 
     String getErrorCodeString();
@@ -17,4 +16,8 @@ public interface IErrorCore {
     void sendDataError();//TODO AndreyPacket type
 
     User getUserThrowExeption();
+
+    ErrorType getErrorType();
+
+    String getErrorDate();
 }

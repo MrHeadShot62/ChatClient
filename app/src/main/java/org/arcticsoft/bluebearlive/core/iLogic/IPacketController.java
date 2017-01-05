@@ -1,7 +1,7 @@
 package org.arcticsoft.bluebearlive.core.iLogic;
 
-import com.mrheadshot62.api.Packet;
-import com.mrheadshot62.api.Types;
+
+import com.mrheadshot62.api.MultiPacket;
 
 /**
  * Created by DmitriyRoot on 05.01.2017.
@@ -9,6 +9,6 @@ import com.mrheadshot62.api.Types;
 
 public interface IPacketController {
 
-    int checkType(Packet packet);
+    int sendPackets(MultiPacket multiPacket);
 
 }

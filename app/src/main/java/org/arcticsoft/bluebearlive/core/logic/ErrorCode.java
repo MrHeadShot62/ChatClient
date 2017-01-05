@@ -10,7 +10,7 @@ public class ErrorCode {
 
     private static ErrorCode instance = null;
 
-    public static ArrayMap<Integer, String> ErrorsCodeInPoroject = new ArrayMap<>();
+    public static ArrayMap<Integer, String> ErrorsCodeInProject = new ArrayMap<>();
 
     public static synchronized  ErrorCode getInstance(){
         if (instance == null){
@@ -21,21 +21,21 @@ public class ErrorCode {
     }
 
     private ErrorCode() {
-        ErrorsCodeInPoroject.put(3, "Успешно!");
-        ErrorsCodeInPoroject.put(100, "Нет подключения к серверу");
-        ErrorsCodeInPoroject.put(101, "Ошибка авторизации на сервере");
-        ErrorsCodeInPoroject.put(102, "Ошибка получения данных");
-        ErrorsCodeInPoroject.put(103, "Ошибка отправки данных");
-        ErrorsCodeInPoroject.put(104, "Ошибка обновления данных");
-        ErrorsCodeInPoroject.put(105, "Ваша сессия устарела");
-        ErrorsCodeInPoroject.put(106, "У вас нет прав доступа");
-        ErrorsCodeInPoroject.put(107, "Ошибка в работе приложения");
-        ErrorsCodeInPoroject.put(108, "Ваш файл не поддерживается системой");
-        ErrorsCodeInPoroject.put(109, "Вы находитесь в режиме оффлайн");
-        ErrorsCodeInPoroject.put(110, "Сервер не отвечает");
-        ErrorsCodeInPoroject.put(111, "Этот логин занят");
-        ErrorsCodeInPoroject.put(112, "Некорректный пароль");
-        ErrorsCodeInPoroject.put(113, "Ошибка при регистрации");
-        ErrorsCodeInPoroject.put(114, "Пройдите авторизацию");
+        ErrorsCodeInProject.put(3, "Успешно!");
+        ErrorsCodeInProject.put(100, "Нет подключения к серверу");
+        ErrorsCodeInProject.put(101, "Ошибка авторизации на сервере");
+        ErrorsCodeInProject.put(102, "Ошибка получения данных");
+        ErrorsCodeInProject.put(103, "Ошибка отправки данных");
+        ErrorsCodeInProject.put(104, "Ошибка обновления данных");
+        ErrorsCodeInProject.put(105, "Ваша сессия устарела");
+        ErrorsCodeInProject.put(106, "У вас нет прав доступа");
+        ErrorsCodeInProject.put(107, "Ошибка в работе приложения");
+        ErrorsCodeInProject.put(108, "Ваш файл не поддерживается системой");
+        ErrorsCodeInProject.put(109, "Вы находитесь в режиме оффлайн");
+        ErrorsCodeInProject.put(110, "Сервер не отвечает");
+        ErrorsCodeInProject.put(111, "Этот логин занят");
+        ErrorsCodeInProject.put(112, "Некорректный пароль");
+        ErrorsCodeInProject.put(113, "Ошибка при регистрации");
+        ErrorsCodeInProject.put(114, "Пройдите авторизацию");
     }
 }
