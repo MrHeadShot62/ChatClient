@@ -12,18 +12,45 @@ public class User extends AUser {
     private String nameUser;
     private String countryUser;
     private Session session;
+    private int permissionLevel;
+
     private int id = 1;
 
     private boolean isLogin = false;
     private boolean isBanned  = false;
 
+    private static User instance = null;
 
-    public User(String loginUser, String nameUser, String countryUser){
+    public static void authUser(String loginUser, String nameUser, String countryUser, String sessionKey, int permissionLevel) {
+        if(instance != null){
+            instance.loginUser = loginUser;
+            instance.nameUser = nameUser;
+            instance.countryUser = countryUser;
+            instance.session = new Session(sessionKey);
+            instance.permissionLevel = permissionLevel;
+        }else {
+            instance = new User(loginUser, nameUser, countryUser, sessionKey , permissionLevel);
+        }
+    }
 
+    public static void guestUser(String loginUser, String nameUser, String countryUser){
+        if(instance == null){
+            instance = new User("guest", "guestName", "n/a", "guest" , PermissionLevel.GUEST);
+        }else {
+            getInstance();
+        }
+    }
+
+    public static synchronized User getInstance(){
+        return instance;
+    }
+
+    private User(String loginUser, String nameUser, String countryUser, String sessionKey, int permissionLevel){
         this.loginUser = loginUser;
         this.nameUser = nameUser;
         this.countryUser = countryUser;
-        this.session = new Session();
+        this.session = new Session(sessionKey);
+        this.permissionLevel = permissionLevel;
 
         if(session.checkSession()){
             isLogin = true;
@@ -61,8 +88,12 @@ public class User extends AUser {
         return countryUser;
     }
 
-    public Session getSession() {
-        return session;
+    public String getSessionKey() {
+        return session.getSessionKey();
+    }
+
+    public int getPermissionLevel() {
+        return permissionLevel;
     }
 
 }

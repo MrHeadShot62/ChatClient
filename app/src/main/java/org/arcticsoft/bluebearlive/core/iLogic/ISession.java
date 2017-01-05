@@ -8,5 +8,4 @@ public interface ISession {
 
     boolean checkSession();
 
-    void setSessionKey();
 }

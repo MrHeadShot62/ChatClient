@@ -17,9 +17,12 @@ public class Session extends ASession {
         return super.checkSession();
     }
 
-    @Override
-    public void setSessionKey() {
-        this.sessionKey = null;
-        Log.d("SessionKey = ", this.sessionKey);
+
+    public String getSessionKey() {
+        return sessionKey;
+    }
+
+    public Session(String sessionKey) {
+        this.sessionKey = sessionKey;
     }
 }

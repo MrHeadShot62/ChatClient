@@ -17,7 +17,7 @@ public abstract class AUserPermission implements IUserPermission {
         if (!user.isBanned()){
             return false;
         }
-        if (!checkTrueSession(user.getSession())){
+        if (!checkTrueSession(user.getSessionKey())){
             return false;
         }
         return true;

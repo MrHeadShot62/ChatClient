@@ -13,8 +13,4 @@ public abstract class ASession implements ISession {
         return true;
     }
 
-    @Override
-    public void setSessionKey() {
-
-    }
 }

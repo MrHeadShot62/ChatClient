@@ -14,7 +14,9 @@ public class ErrorCode {
 
     public static synchronized  ErrorCode getInstance(){
         if (instance == null){
-            return new ErrorCode();
+            instance = new ErrorCode();
+            return instance;
+
         }else {
             return instance;
         }
