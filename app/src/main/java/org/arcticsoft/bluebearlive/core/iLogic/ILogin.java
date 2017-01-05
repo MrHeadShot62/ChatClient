@@ -6,9 +6,11 @@ package org.arcticsoft.bluebearlive.core.iLogic;
 
 public interface ILogin {
 
-    boolean checkLoginInDataBase();
+    void startLogin(String name, String pass);
 
-    boolean checkPasswordInDataBase();
+    boolean checkLoginInDataBase(String name);
+
+    boolean checkPasswordInDataBase(String pass);
 
     void refreshStatus();
 

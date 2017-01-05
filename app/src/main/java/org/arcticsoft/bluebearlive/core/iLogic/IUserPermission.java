@@ -1,5 +1,6 @@
 package org.arcticsoft.bluebearlive.core.iLogic;
 
+import org.arcticsoft.bluebearlive.core.logic.Session;
 import org.arcticsoft.bluebearlive.core.logic.User;
 
 /**
@@ -10,5 +11,5 @@ public interface IUserPermission {
 
     boolean havePermission(User user);
 
-    boolean checkId();
+    boolean checkTrueSession(Session session);
 }

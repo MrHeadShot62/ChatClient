@@ -1,6 +1,7 @@
 package org.arcticsoft.bluebearlive.core.aLogic;
 
 import org.arcticsoft.bluebearlive.core.iLogic.IUserPermission;
+import org.arcticsoft.bluebearlive.core.logic.Session;
 import org.arcticsoft.bluebearlive.core.logic.User;
 
 /**
@@ -16,11 +17,15 @@ public abstract class AUserPermission implements IUserPermission {
         if (!user.isBanned()){
             return false;
         }
+        if (!checkTrueSession(user.getSession())){
+            return false;
+        }
         return true;
+
     }
 
     @Override
-    public boolean checkId() {
-        return false;
+    public boolean checkTrueSession(Session session) {
+        return true;
     }
 }

@@ -8,15 +8,26 @@ import org.arcticsoft.bluebearlive.core.iLogic.ILogin;
 
 public abstract class ALogin implements ILogin {
 
-
+    @Override
+    public void startLogin(String name, String pass) {
+        if(!checkLoginInDataBase(name)){
+            return;
+        }
+        if (checkPasswordInDataBase(pass)){
+            return;
+        }
+        refreshLastIp();
+        refreshLastLogin();
+        refreshStatus();
+    }
 
     @Override
-    public boolean checkLoginInDataBase() {
+    public boolean checkLoginInDataBase(String name) {
         return true;
     }
 
     @Override
-    public boolean checkPasswordInDataBase() {
+    public boolean checkPasswordInDataBase(String pass) {
         return true;
     }
 

@@ -7,4 +7,10 @@ import org.arcticsoft.bluebearlive.core.aLogic.ALogin;
  */
 
 public class Login extends ALogin {
+
+    @Override
+    public void startLogin(String name, String pass) {
+        super.startLogin(name, pass);
+    }
+
 }
