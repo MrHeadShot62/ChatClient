@@ -1,11 +1,17 @@
 package org.arcticsoft.bluebearlive.activity;
 
+import android.media.Image;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.mrheadshot62.api.types.AuthPacket;
+import com.mrheadshot62.api.types.CommandPacket;
+import com.mrheadshot62.api.types.ImagePacket;
+import com.mrheadshot62.api.types.UserPacket;
 
 import org.arcticsoft.bluebearlive.R;
+import org.arcticsoft.bluebearlive.core.logic.Application;
 import org.arcticsoft.bluebearlive.core.logic.PacketManager;
 import org.arcticsoft.bluebearlive.core.logic.User;
 import org.arcticsoft.bluebearlive.socket.ConnectionController;
@@ -18,11 +24,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ConnectionController.start();
-        user = User.guestUser("mylogin", "myname", "mycounry");
+
+        Application application = new Application();
+
+        application.sendAuth();
 
 
-        PacketManager.PacketGenerator(user, new AuthPacket(user.getLoginUser(), "asdsa"));
+        PacketManager.PacketGenerator(application.getUserApplication(), new UserPacket("name"));
+        PacketManager.PacketGenerator(application.getUserApplication(), new CommandPacket(22, "sd"));
     }
 
 }

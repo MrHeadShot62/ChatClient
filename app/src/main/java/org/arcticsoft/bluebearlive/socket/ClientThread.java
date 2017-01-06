@@ -1,13 +1,11 @@
 package org.arcticsoft.bluebearlive.socket;
 
-import android.os.Debug;
 import android.util.Log;
 
 import com.mrheadshot62.api.MultiPacket;
 import com.mrheadshot62.api.streams.BlueBearInputStream;
 import com.mrheadshot62.api.streams.BlueBearOutputStream;
 
-import java.io.IOException;
 import java.net.Socket;
 /**
  * Created by novak on 05.01.2017.
@@ -17,10 +15,10 @@ public class ClientThread extends Thread {
     private final String ip;
     private ServerListener listener;
     private BlueBearOutputStream outputStream;
-    private Socket socket;
-    BlueBearInputStream input;
+    private int countReconnect = 5;
+    public boolean checkSendPacket = false;
 
-    public ClientThread(String ip) {
+    ClientThread(String ip) {
         this.ip = ip;
     }
 
@@ -29,8 +27,8 @@ public class ClientThread extends Thread {
         Log.d("CT", "227");
         try{
             Log.d("CT", "228");
-            socket = new Socket(ip, 27015);
-            input = new BlueBearInputStream(socket.getInputStream());
+            Socket socket = new Socket(ip, 27015);
+            BlueBearInputStream input = new BlueBearInputStream(socket.getInputStream());
             outputStream = new BlueBearOutputStream(socket.getOutputStream());
             new ServerListener(input).execute();
             ConnectionController.isStarted = true;
@@ -40,25 +38,39 @@ public class ClientThread extends Thread {
         }
     }
 
-    public void sendMultiPacket(final MultiPacket multiPacket){
-        if (!ConnectionController.isStarted){
-            try {
-                sleep(300);
-                sendMultiPacket(multiPacket);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+    public boolean sendMultiPacket(final MultiPacket multiPacket){
         Log.d("CT", "230");
         new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    outputStream.writeMultiPacket(multiPacket);
-                } catch (Exception e) {
-                    Log.e("CT", "SENDMP", e);
-                }
+                do {
+                    if (ConnectionController.isStarted){
+                        try{
+                            outputStream.writeMultiPacket(multiPacket);
+                            countReconnect = 0;
+                            checkSendPacket = true;
+                        } catch (Exception e) {
+                            countReconnect--;
+                            Log.e("CT", "SENDMP", e);
+                        }
+                    }else {
+                        try {
+                            sleep(3000);
+                            Log.w("CT", "ResendMultiPacket");
+                            countReconnect--;
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }while (countReconnect != 0);
+                countReconnect = 5;
             }
-        }).start();
+        }).run();
+        return checkSendPacket;
     }
+
+    public void resetStatusPacketManager(){
+        this.checkSendPacket = false;
+    }
+
 }

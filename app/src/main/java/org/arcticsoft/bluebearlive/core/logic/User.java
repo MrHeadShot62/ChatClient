@@ -37,14 +37,14 @@ public class User extends AUser {
 
     public static User guestUser(String loginUser, String nameUser, String countryUser){
         if(instance == null){
-            instance = new User("guest", "guestName", "n/a", "guest" , PermissionLevel.GUEST);
+            instance = new User(loginUser, nameUser, countryUser, "guest" , PermissionLevel.AUTH);
             return getInstance();
         }else {
             return getInstance();
         }
     }
 
-    private static synchronized User getInstance(){
+    public static synchronized User getInstance(){
         return instance;
     }
 
@@ -97,6 +97,10 @@ public class User extends AUser {
 
     public int getPermissionLevel() {
         return permissionLevel;
+    }
+
+    public Session getSession() {
+        return session;
     }
 
 }

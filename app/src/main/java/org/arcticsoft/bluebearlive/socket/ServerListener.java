@@ -1,6 +1,7 @@
 package org.arcticsoft.bluebearlive.socket;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.mrheadshot62.api.MultiPacket;
 import com.mrheadshot62.api.Packet;
@@ -14,10 +15,10 @@ import java.io.IOException;
  * Created by novak on 05.01.2017.
  */
 
-public class ServerListener extends AsyncTask<Void, MultiPacket, Void> {
+class ServerListener extends AsyncTask<Void, MultiPacket, Void> {
     private final BlueBearInputStream input;
 
-    public ServerListener(BlueBearInputStream inputStream) {
+    ServerListener(BlueBearInputStream inputStream) {
         this.input = inputStream;
     }
 
@@ -28,7 +29,8 @@ public class ServerListener extends AsyncTask<Void, MultiPacket, Void> {
                 MultiPacket p = input.readMultiPacket();
                 publishProgress(p);
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.w("ServerListener", "Connection Reset");
+                return null;
             }
         }
         return null;
