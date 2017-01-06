@@ -1,5 +1,8 @@
 package org.arcticsoft.bluebearlive.socket;
 
+import android.os.Debug;
+import android.util.Log;
+
 import com.mrheadshot62.api.MultiPacket;
 import com.mrheadshot62.api.streams.BlueBearInputStream;
 import com.mrheadshot62.api.streams.BlueBearOutputStream;
@@ -14,6 +17,8 @@ public class ClientThread extends Thread {
     private final String ip;
     private ServerListener listener;
     private BlueBearOutputStream outputStream;
+    private Socket socket;
+    BlueBearInputStream input;
 
     public ClientThread(String ip) {
         this.ip = ip;
@@ -21,24 +26,28 @@ public class ClientThread extends Thread {
 
     @Override
     public void run() {
+        Log.d("CT", "227");
         try{
-            Socket socket = new Socket(ip, 5555);
-            BlueBearInputStream input = new BlueBearInputStream(socket.getInputStream());
+            Log.d("CT", "228");
+            socket = new Socket(ip, 27015);
+            input = new BlueBearInputStream(socket.getInputStream());
             outputStream = new BlueBearOutputStream(socket.getOutputStream());
             new ServerListener(input).execute();
+            Log.d("CT", "229");
         }catch(Exception e){
-            e.printStackTrace();
+            Log.e("CT", "EVREI", e);
         }
     }
 
     public void sendMultiPacket(final MultiPacket multiPacket){
+        Log.d("CT", "230");
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     outputStream.writeMultiPacket(multiPacket);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                } catch (Exception e) {
+                    Log.e("CT", "SENDMP", e);
                 }
             }
         }).start();

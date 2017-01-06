@@ -11,5 +11,5 @@ public interface IUserPermission {
 
     boolean havePermission(User user);
 
-    boolean checkTrueSession(Session session);
+    boolean checkTrueSession(String sessionKey);
 }

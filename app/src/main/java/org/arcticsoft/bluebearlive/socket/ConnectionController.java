@@ -6,11 +6,11 @@ import com.mrheadshot62.api.MultiPacket;
  * Created by novak on 05.01.2017.
  */
 
-public class Controller {
+public class ConnectionController {
     private static ClientThread clientThread;
 
     public static void start(){
-        clientThread = new ClientThread("127.0.0.1");
+        clientThread = new ClientThread("192.168.1.6");
         clientThread.start();
     }
 

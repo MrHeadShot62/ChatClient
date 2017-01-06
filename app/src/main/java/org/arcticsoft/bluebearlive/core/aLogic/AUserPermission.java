@@ -25,7 +25,7 @@ public abstract class AUserPermission implements IUserPermission {
     }
 
     @Override
-    public boolean checkTrueSession(Session session) {
+    public boolean checkTrueSession(String sessionKey) {
         return true;
     }
 }

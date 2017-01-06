@@ -5,8 +5,7 @@ import com.mrheadshot62.api.Types;
 import com.mrheadshot62.api.types.*;
 import com.mrheadshot62.api.MultiPacket;
 
-import org.arcticsoft.bluebearlive.core.aLogic.APacketController;
-import org.arcticsoft.bluebearlive.socket.Controller;
+import org.arcticsoft.bluebearlive.socket.ConnectionController;
 
 /**
  * Created by DmitriyRoot on 05.01.2017.
@@ -61,7 +60,7 @@ public class PacketManager{
     }
 
     private static int sendPackets(MultiPacket multiPacket) {
-        Controller.sendMultiPacket(multiPacket);
+        ConnectionController.sendMultiPacket(multiPacket);
         return 0;
     }
 }

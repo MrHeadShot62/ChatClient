@@ -21,27 +21,30 @@ public class User extends AUser {
 
     private static User instance = null;
 
-    public static void authUser(String loginUser, String nameUser, String countryUser, String sessionKey, int permissionLevel) {
+    public static User authUser(String loginUser, String nameUser, String countryUser, String sessionKey, int permissionLevel) {
         if(instance != null){
             instance.loginUser = loginUser;
             instance.nameUser = nameUser;
             instance.countryUser = countryUser;
             instance.session = new Session(sessionKey);
             instance.permissionLevel = permissionLevel;
+            return getInstance();
         }else {
             instance = new User(loginUser, nameUser, countryUser, sessionKey , permissionLevel);
+            return getInstance();
         }
     }
 
-    public static void guestUser(String loginUser, String nameUser, String countryUser){
+    public static User guestUser(String loginUser, String nameUser, String countryUser){
         if(instance == null){
             instance = new User("guest", "guestName", "n/a", "guest" , PermissionLevel.GUEST);
+            return getInstance();
         }else {
-            getInstance();
+            return getInstance();
         }
     }
 
-    public static synchronized User getInstance(){
+    private static synchronized User getInstance(){
         return instance;
     }
 
