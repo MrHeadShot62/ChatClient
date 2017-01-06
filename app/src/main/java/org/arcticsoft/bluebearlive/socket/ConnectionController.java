@@ -8,6 +8,8 @@ import com.mrheadshot62.api.MultiPacket;
 
 public class ConnectionController {
     private static ClientThread clientThread;
+    public static boolean isStarted = false;
+
 
     public static void start(){
         clientThread = new ClientThread("192.168.1.6");

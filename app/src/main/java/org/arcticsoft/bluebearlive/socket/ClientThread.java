@@ -33,6 +33,7 @@ public class ClientThread extends Thread {
             input = new BlueBearInputStream(socket.getInputStream());
             outputStream = new BlueBearOutputStream(socket.getOutputStream());
             new ServerListener(input).execute();
+            ConnectionController.isStarted = true;
             Log.d("CT", "229");
         }catch(Exception e){
             Log.e("CT", "EVREI", e);
@@ -40,6 +41,14 @@ public class ClientThread extends Thread {
     }
 
     public void sendMultiPacket(final MultiPacket multiPacket){
+        if (!ConnectionController.isStarted){
+            try {
+                sleep(300);
+                sendMultiPacket(multiPacket);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         Log.d("CT", "230");
         new Thread(new Runnable() {
             @Override
