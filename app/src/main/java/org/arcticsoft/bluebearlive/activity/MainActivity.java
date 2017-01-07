@@ -25,8 +25,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Application application = new Application();
-
+        Application application = Application.getInstance();
+        application.setServerConnection();
         application.sendAuth();
 
         PacketManager.PacketGenerator(application.getUserApplication(), new UserPacket("name"));

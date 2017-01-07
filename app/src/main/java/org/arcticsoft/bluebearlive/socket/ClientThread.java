@@ -47,7 +47,7 @@ public class ClientThread extends Thread {
             @Override
             public void run() {
                 do {
-                    Log.d(TAG, String.format("Попытка отправки пакета на сервер. Осталось - %d попыток", countReconnect));
+                    Log.d(TAG, "Попытка отправки пакета на сервер. Осталось - "+countReconnect+" попыток");
                     if (ConnectionController.isStarted){
                         try{
                             outputStream.writeMultiPacket(multiPacket);

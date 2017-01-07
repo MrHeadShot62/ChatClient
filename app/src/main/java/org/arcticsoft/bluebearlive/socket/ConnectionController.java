@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.mrheadshot62.api.MultiPacket;
 
+import org.arcticsoft.bluebearlive.core.logic.Application;
+
 /**
  * Created by novak on 05.01.2017.
  */
@@ -16,7 +18,7 @@ public class ConnectionController {
 
     public static boolean start(){
         try {
-            clientThread = new ClientThread("192.168.1.6");
+            clientThread = new ClientThread(Application.getInstance().getServerIP());
             clientThread.start();
             return true;
         }catch (Exception e){

@@ -15,13 +15,25 @@ import org.arcticsoft.bluebearlive.socket.ConnectionController;
 public class Application extends AApplication {
 
     private static final String TAG = "APPLICATION";
+    private static final String SERVERIP = "194.117.253.99";
 
     private User userAplication;
     private String serverIP;
     private ClientThread clientThread;
 
+    private static Application instance = null;
+
+    public static Application getInstance(){
+        if(instance == null){
+            instance = new Application();
+            return  instance;
+        }else {
+            return instance;
+        }
+    }
+
     public Application() {
-        super();
+
     }
 
     @Override
@@ -35,6 +47,11 @@ public class Application extends AApplication {
             Log.d(TAG, "LoadReadyUser");
             return false;
         }
+    }
+
+    @Override
+    public void setServerIP() {
+
     }
 
     @Override
@@ -52,7 +69,8 @@ public class Application extends AApplication {
 
     @Override
     public String getServerIP() {
-        return super.getServerIP();
+        Log.d(TAG, "IP READY");
+        return SERVERIP;
     }
 
     @Override

@@ -13,14 +13,13 @@ public abstract class AApplication {
 
 
     private static final String TAG = "AAPPLICATION";
-    private static final String SERVERIP = "192.168.1.6";
+
 
     public AApplication() {
         try {
             setUserApplication();
             //setUserLanguage();
-            setServerIP(SERVERIP);
-            setServerConnection();
+            setServerIP();
         }catch (Exception e){
             Log.e("AAPLICATION", "Error Start Configuration in Application", e);
         }
@@ -30,16 +29,11 @@ public abstract class AApplication {
 
     //public abstract void setUserLanguage();
 
-    public void setServerIP(String ip){
-
-    }
+    public abstract void setServerIP();
 
     public abstract boolean setServerConnection();
 
-    public String getServerIP(){
-        Log.d(TAG, "IP READY");
-        return SERVERIP;
-    }
+    public abstract String getServerIP();
 
     //public abstract void getSenderPacketManager();
 
