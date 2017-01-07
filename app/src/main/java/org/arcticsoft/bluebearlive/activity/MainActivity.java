@@ -18,7 +18,7 @@ import org.arcticsoft.bluebearlive.socket.ConnectionController;
 
 public class MainActivity extends AppCompatActivity {
 
-    User user;
+    Application application;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +27,18 @@ public class MainActivity extends AppCompatActivity {
 
         Application application = Application.getInstance();
         application.setServerConnection();
+
+        if (ConnectionController.isStarted){
+            sender();
+        }else {
+
+        }
+
+
+
+}
+
+    void sender(){
         application.sendAuth();
 
         PacketManager.PacketGenerator(application.getUserApplication(), new UserPacket("name"));

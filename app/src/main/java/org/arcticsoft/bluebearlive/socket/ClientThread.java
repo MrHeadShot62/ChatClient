@@ -27,27 +27,27 @@ public class ClientThread extends Thread {
 
     @Override
     public void run() {
-        Log.d(TAG, "Старт потока подключения к серверу");
+        Log.d(TAG, "Start Thread connect server");
         try{
-            Log.d(TAG, "Попытка подключения к серверу");
+            Log.d(TAG, "Connection attempt");
             Socket socket = new Socket(ip, 27015);
             BlueBearInputStream input = new BlueBearInputStream(socket.getInputStream());
             outputStream = new BlueBearOutputStream(socket.getOutputStream());
             new ServerListener(input).execute();
             ConnectionController.isStarted = true;
-            Log.d(TAG, String.format("Подключение к серверу успешно! IP_ADDRESS -> %s", socket.getInetAddress().getHostAddress()));
+            Log.d(TAG, String.format("Connected! IP_ADDRESS -> %s", socket.getInetAddress().getHostAddress()));
         }catch(Exception e){
-            Log.e(TAG, "Ошибка подключения к серверу", e);
+            Log.e(TAG, "Failed connected", e);
         }
     }
 
     public boolean sendMultiPacket(final MultiPacket multiPacket){
-        Log.d(TAG, "Отправка мульти пакета на сервер");
+        Log.d(TAG, "Send MultiPacket on Server");
         new Thread(new Runnable() {
             @Override
             public void run() {
                 do {
-                    Log.d(TAG, "Попытка отправки пакета на сервер. Осталось - "+countReconnect+" попыток");
+                    Log.w(TAG, "Attempt sending packet on Server. Remaining - "+countReconnect);
                     if (ConnectionController.isStarted){
                         try{
                             outputStream.writeMultiPacket(multiPacket);
@@ -55,12 +55,12 @@ public class ClientThread extends Thread {
                             checkSendPacket = true;
                         } catch (Exception e) {
                             countReconnect--;
-                            Log.e(TAG, "Ошибка отправки пакета", e);
+                            Log.e(TAG, "Error sending Packet", e);
                         }
                     }else {
                         try {
                             sleep(3000);
-                            Log.d(TAG, "Подключение к серверу отсутствует. Ваш пакет не отправлен");
+                            Log.e(TAG, "Connect to Server off. Packet not sended");
                             countReconnect--;
                         } catch (InterruptedException e) {
                             e.printStackTrace();
@@ -72,11 +72,11 @@ public class ClientThread extends Thread {
         }).start();
 
         if(this.checkSendPacket){
-            Log.d(TAG, "Ваш пакет был отправлен");
+            Log.d(TAG, "Packet is sending");
             resetStatusPacketManager();
             return true;
         }else {
-            Log.e(TAG, "Возникала ошибка! Ваш пакет не отправлен");
+            Log.e(TAG, "Error! Packet not sending");
             return false;
         }
     }

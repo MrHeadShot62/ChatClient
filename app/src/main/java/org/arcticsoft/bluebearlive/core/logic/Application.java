@@ -58,10 +58,10 @@ public class Application extends AApplication {
     public boolean setServerConnection() {
         if(ConnectionController.start()){
             clientThread = ConnectionController.getClientThread();
-            Log.d(TAG, "CONNECTION_START | SERVER_IP -> "+ getServerIP());
+            //Log.d(TAG, "CONNECTION_START | SERVER_IP -> "+ getServerIP());
             return true;
         }else {
-            Log.d(TAG, "CONNECTION_NOT_STARTED | CONNECT_IP_ADDRESS -> "+ getServerIP());
+            Log.e(TAG, "CONNECTION_NOT_STARTED | CONNECT_IP_ADDRESS -> "+ getServerIP());
             return false;
         }
 
@@ -92,10 +92,10 @@ public class Application extends AApplication {
     public boolean sendAuth() {
         PacketManager.PacketGenerator(userAplication, new AuthPacket(userAplication.getLoginUser(), "asdsa"));
         if(clientThread.checkSendPacket){
-            Log.d(TAG, "Авторизация успешна | CONNECT_IP_ADDRESS -> "+ getServerIP());
+            Log.d(TAG, "AuthOK | CONNECT_IP_ADDRESS -> "+ getServerIP());
             return false;
         }else {
-            Log.d(TAG, "Авторизация провалена | CONNECT_IP_ADDRESS -> "+ getServerIP());
+            Log.e(TAG, "AuthFailed | CONNECT_IP_ADDRESS -> "+ getServerIP());
             return true;
         }
     }

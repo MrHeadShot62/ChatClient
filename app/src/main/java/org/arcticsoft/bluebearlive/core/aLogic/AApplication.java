@@ -19,7 +19,7 @@ public abstract class AApplication {
         try {
             setUserApplication();
             //setUserLanguage();
-            setServerIP();
+            //setServerIP();
         }catch (Exception e){
             Log.e("AAPLICATION", "Error Start Configuration in Application", e);
         }
