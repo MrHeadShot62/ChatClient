@@ -56,7 +56,7 @@ public class PacketManager{
     }
 
     private static PermissionPacket createPermissionPacket(User user){
-        return new PermissionPacket(user.getSessionKey(), user.getPermissionLevel());
+        return new PermissionPacket(user.getSessionKey(), user.getPermissionLevel(), user.getId());
     }
 
     private static int sendPackets(MultiPacket multiPacket) {

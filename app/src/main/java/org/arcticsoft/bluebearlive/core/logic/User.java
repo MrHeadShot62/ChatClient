@@ -14,7 +14,7 @@ public class User extends AUser {
     private Session session;
     private int permissionLevel;
 
-    private int id = 1;
+    private int id = 0;
 
     private boolean isLogin = false;
     private boolean isBanned  = false;
@@ -101,6 +101,10 @@ public class User extends AUser {
 
     public Session getSession() {
         return session;
+    }
+
+    public int getId() {
+        return id;
     }
 
 }

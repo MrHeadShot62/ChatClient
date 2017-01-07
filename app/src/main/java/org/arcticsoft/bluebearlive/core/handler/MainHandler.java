@@ -21,6 +21,9 @@ public class MainHandler {
                 case TypesAnswer.AUTHPACKET:
                     new AuthHandler().handlePacket(p);
                     break;
+                case TypesAnswer.ONLYCODE:
+                    new AuthHandler().handlePacket(p);
+                    break;
                 default:
                     break;
             }
