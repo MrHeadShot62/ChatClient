@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
 
         application.sendAuth();
 
-
         PacketManager.PacketGenerator(application.getUserApplication(), new UserPacket("name"));
         PacketManager.PacketGenerator(application.getUserApplication(), new CommandPacket(22, "sd"));
     }

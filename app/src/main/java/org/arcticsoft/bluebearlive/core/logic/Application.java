@@ -75,11 +75,9 @@ public class Application extends AApplication {
         PacketManager.PacketGenerator(userAplication, new AuthPacket(userAplication.getLoginUser(), "asdsa"));
         if(clientThread.checkSendPacket){
             Log.d(TAG, "Авторизация успешна | CONNECT_IP_ADDRESS -> "+ getServerIP());
-            clientThread.resetStatusPacketManager();
             return false;
         }else {
             Log.d(TAG, "Авторизация провалена | CONNECT_IP_ADDRESS -> "+ getServerIP());
-            clientThread.resetStatusPacketManager();
             return true;
         }
     }

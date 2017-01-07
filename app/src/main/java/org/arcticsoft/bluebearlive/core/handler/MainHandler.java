@@ -4,6 +4,8 @@ import com.mrheadshot62.api.Packet;
 import com.mrheadshot62.api.Types;
 import com.mrheadshot62.api.types.PermissionPacket;
 
+import org.arcticsoft.bluebearlive.core.logic.TypesAnswer;
+
 /**
  * Created by novak on 05.01.2017.
  */
@@ -14,21 +16,13 @@ public class MainHandler {
 
     public MainHandler(Packet[] packets) {
         this.packets = packets;
-        if (havePermissionPacket()){
-            for (Packet p : packets) {
-                switch (p.getType()){
-                    case Types.AUTH:
-                        new AuthHandler().handlePacket(p);
-                        break;
-                    case Types.Command:
-                        new CommandHandler().handlePacket(p);
-                        break;
-                    case Types.Image:
-                        new ImageHandler().handlePacket(p);
-                        break;
-                    default:
-                        break;
-                }
+        for (Packet p : packets) {
+            switch (p.getType()){
+                case TypesAnswer.AUTHPACKET:
+                    new AuthHandler().handlePacket(p);
+                    break;
+                default:
+                    break;
             }
         }
     }
@@ -37,13 +31,4 @@ public class MainHandler {
         return true;    //TODO Session
     }
 
-    private boolean havePermissionPacket(){
-        for (Packet p:packets){
-            if (p.getType() == Types.PERMISSION){
-                this.permisson = (PermissionPacket)p.getData();
-                return true;
-            }
-        }
-        return false;
-    }
 }
