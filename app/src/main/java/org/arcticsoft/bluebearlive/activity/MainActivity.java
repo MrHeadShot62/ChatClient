@@ -28,21 +28,21 @@ public class MainActivity extends AppCompatActivity {
         Application application = Application.getInstance();
         application.setServerConnection();
 
-        if (ConnectionController.isStarted){
-            sender();
-        }else {
+//        while (!ConnectionController.isStarted){
+//            try {
+//                Thread.currentThread().sleep(1000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
 
-        }
-
-
-
-}
-
-    void sender(){
         application.sendAuth();
 
         PacketManager.PacketGenerator(application.getUserApplication(), new UserPacket("name"));
         PacketManager.PacketGenerator(application.getUserApplication(), new CommandPacket(22, "sd"));
-    }
+
+}
+
+
 
 }

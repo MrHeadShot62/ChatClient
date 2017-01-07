@@ -19,6 +19,7 @@ public class ClientThread extends Thread {
     private ServerListener listener;
     private BlueBearOutputStream outputStream;
     private int countReconnect = 5;
+
     public boolean checkSendPacket = false;
 
     ClientThread(String ip) {
@@ -41,7 +42,7 @@ public class ClientThread extends Thread {
         }
     }
 
-    public boolean sendMultiPacket(final MultiPacket multiPacket){
+    public synchronized boolean sendMultiPacket(final MultiPacket multiPacket){
         Log.d(TAG, "Send MultiPacket on Server");
         new Thread(new Runnable() {
             @Override
@@ -52,7 +53,8 @@ public class ClientThread extends Thread {
                         try{
                             outputStream.writeMultiPacket(multiPacket);
                             countReconnect = 0;
-                            checkSendPacket = true;
+                            setCheckSendPacket(true);
+                            Log.e(TAG, "Packet sended");
                         } catch (Exception e) {
                             countReconnect--;
                             Log.e(TAG, "Error sending Packet", e);
@@ -71,7 +73,7 @@ public class ClientThread extends Thread {
             }
         }).start();
 
-        if(this.checkSendPacket){
+        if(isCheckSendPacket()){
             Log.d(TAG, "Packet is sending");
             resetStatusPacketManager();
             return true;
@@ -83,6 +85,14 @@ public class ClientThread extends Thread {
 
     private void resetStatusPacketManager(){
         this.checkSendPacket = false;
+    }
+
+    public synchronized boolean isCheckSendPacket() {
+        return checkSendPacket;
+    }
+
+    public synchronized void setCheckSendPacket(boolean checkSendPacket) {
+        this.checkSendPacket = checkSendPacket;
     }
 
 }

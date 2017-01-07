@@ -20,6 +20,7 @@ public class ConnectionController {
         try {
             clientThread = new ClientThread(Application.getInstance().getServerIP());
             clientThread.start();
+            clientThread.join();
             return true;
         }catch (Exception e){
             Log.e("NewClientThread", "Не удалось подключиться к серверу");
