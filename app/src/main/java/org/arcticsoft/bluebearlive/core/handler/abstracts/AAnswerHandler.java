@@ -1,5 +1,6 @@
 package org.arcticsoft.bluebearlive.core.handler.abstracts;
 
+import com.mrheadshot62.api.Packet;
 import com.mrheadshot62.api.types.answer.ServerAnswerPacket;
 
 /**
@@ -10,16 +11,16 @@ public abstract class AAnswerHandler {
 
     ServerAnswerPacket serverAnswerPacket;
 
-    public void handlePacket(ServerAnswerPacket p) {
+    public void handlePacket(Packet p) {
         try {
-            serverAnswerPacket = (ServerAnswerPacket)p.getObjects();
-            handleAuthPacket(serverAnswerPacket);
+            serverAnswerPacket = (ServerAnswerPacket)p.getData();
+            handleAnswerPacket(serverAnswerPacket);
         }catch (Exception e){
             e.printStackTrace();
         }
     }
 
-    protected abstract void handleAuthPacket(ServerAnswerPacket serverAnswerPacket);
+    protected abstract void handleAnswerPacket(ServerAnswerPacket serverAnswerPacket);
 
     protected int initError(){
         return serverAnswerPacket.getServerAnswerCode();

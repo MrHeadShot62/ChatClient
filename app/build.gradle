@@ -41,5 +41,8 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.1.0'
     testCompile 'junit:junit:4.12'
     compile files('libs/Sockets.jar')
+    compile 'devlight.io:navigationtabbar:1.2.5'
+    compile 'co.dift.ui.swipetoaction:library:1.1'
+    compile 'com.facebook.fresco:fresco:0.5.3'
 
 }

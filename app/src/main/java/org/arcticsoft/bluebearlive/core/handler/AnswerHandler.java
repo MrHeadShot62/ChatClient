@@ -15,7 +15,7 @@ class AnswerHandler extends AAnswerHandler {
     private static final String TAG = "AUTH: ";
 
     @Override
-    protected void handleAuthPacket(ServerAnswerPacket serverAnswerPacket) {
+    protected void handleAnswerPacket(ServerAnswerPacket serverAnswerPacket) {
         Log.d(TAG, "CodeAnswerRequest: "+super.initError());
     }
 }

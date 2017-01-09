@@ -39,7 +39,7 @@ public class Application extends AApplication {
     @Override
     public boolean setUserApplication() {
         if(User.getInstance() == null){
-            userAplication = User.guestUser("TestLogin", "TestName", "TestCountry");
+            userAplication = User.guestUser("guest", "TestName", "TestCountry");
             Log.d(TAG, "CreateNewGuestUser");
             return true;
         }else {
@@ -90,7 +90,7 @@ public class Application extends AApplication {
 
     @Override
     public boolean sendAuth() {
-        PacketManager.PacketGenerator(userAplication, new AuthPacket(userAplication.getLoginUser(), "asdsa"));
+        PacketManager.PacketGenerator(userAplication, new AuthPacket(userAplication.getLoginUser(), "guest"));
         if(clientThread.checkSendPacket){
             Log.d(TAG, "AuthOK | CONNECT_IP_ADDRESS -> "+ getServerIP());
             return false;
