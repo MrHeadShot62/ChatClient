@@ -1,12 +1,8 @@
 package org.arcticsoft.bluebearlive.activity;
 
-import android.graphics.Color;
-import android.os.Handler;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -50,26 +46,26 @@ public class MainNotice {
         swipeToAction = new SwipeToAction(recyclerView, new SwipeToAction.SwipeListener<Notice>() {
             @Override
             public boolean swipeLeft(final Notice itemData) {
-                final int pos = removeBook(itemData);
-                displaySnackbar(itemData.getTitle() + " remove");
+                final int pos = removeNotice(itemData);
+                displayInfoNotice(itemData.getTitle() + " remove");
                 return true;
             }
 
             @Override
             public boolean swipeRight(Notice itemData) {
-                final int pos = removeBook(itemData);
-                displaySnackbar(itemData.getTitle() + " remove");
+                final int pos = removeNotice(itemData);
+                displayInfoNotice(itemData.getTitle() + " remove");
                 return true;
             }
 
             @Override
             public void onClick(Notice itemData) {
-                displaySnackbar(itemData.getTitle() + " clicked");
+                displayInfoNotice(itemData.getTitle() + " clicked");
             }
 
             @Override
             public void onLongClick(Notice itemData) {
-                displaySnackbar(itemData.getTitle() + " long clicked");
+                displayInfoNotice(itemData.getTitle() + " long clicked");
             }
         });
 
@@ -89,18 +85,18 @@ public class MainNotice {
         this.books.add(new Notice("Turing's Cathedral: The Origins of the Digital Universe", "George Dyson", "http://static.bookstck.com/books/turing-s-cathedral-400.jpg"));
     }
 
-    private void displaySnackbar(String text) {
+    private void displayInfoNotice(String text) {
         Toast.makeText(view.getContext(), text, Toast.LENGTH_LONG).show();
     }
 
-    private int removeBook(Notice book) {
+    private int removeNotice(Notice book) {
         int pos = books.indexOf(book);
         books.remove(book);
         adapter.notifyItemRemoved(pos);
         return pos;
     }
 
-    private void addBook(int pos, Notice book) {
+    private void newNotice(int pos, Notice book) {
         books.add(pos, book);
         adapter.notifyItemInserted(pos);
     }

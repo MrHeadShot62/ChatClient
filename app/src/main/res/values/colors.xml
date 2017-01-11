@@ -2,6 +2,7 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimaryDarkAlfa">#30303f9f</color>
     <color name="colorAccent">#FF4081</color>
     <color name="primary">#2d2d2d</color>
     <color name="secondary">#FF4081</color>
@@ -9,4 +10,6 @@
     <color name="divider">#CCC</color>
     <color name="icons">#FFF</color>
     <color name="item_background">#FFF</color>
+    <color name="text_gray">#323232</color>
+    <color name="text_lgray">#000000</color>
 </resources>

@@ -4,14 +4,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#423752"
-    android:orientation="vertical">
+    android:background="#979797"
+    android:orientation="vertical"
+    android:weightSum="1">
 
-    <org.arcticsoft.bluebearlive.fragments.NonSwipeableViewPager
-        android:id="@+id/vp_horizontal_ntb"
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_height="match_parent"
+        android:id="@+id/ufragment"
+        android:layout_weight="0.94" />
+
+    <!--<org.arcticsoft.bluebearlive.fragments.NonSwipeableViewPager-->
+        <!--android:id="@+id/vp_horizontal_ntb"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_weight="1"/>-->
 
     <devlight.io.library.ntb.NavigationTabBar
         android:id="@+id/ntb"

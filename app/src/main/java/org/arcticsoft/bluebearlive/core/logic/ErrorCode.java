@@ -10,9 +10,9 @@ public class ErrorCode {
 
     private static ErrorCode instance = null;
 
-    public static ArrayMap<Integer, String> ErrorsCodeInProject = new ArrayMap<>();
+    public ArrayMap<Integer, String> ErrorsCodeInProject = new ArrayMap<>();
 
-    public static synchronized  ErrorCode getInstance(){
+    public static  ErrorCode getInstance(){
         if (instance == null){
             instance = new ErrorCode();
             return instance;

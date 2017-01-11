@@ -1,109 +1,54 @@
 package org.arcticsoft.bluebearlive.activity;
 
 import android.graphics.Color;
-import android.media.Image;
-import android.os.StrictMode;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.util.ArrayMap;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
-
-import com.mrheadshot62.api.types.AuthPacket;
-import com.mrheadshot62.api.types.CommandPacket;
-import com.mrheadshot62.api.types.ImagePacket;
-import com.mrheadshot62.api.types.UserPacket;
+import android.util.Log;
+import android.widget.FrameLayout;
 
 import org.arcticsoft.bluebearlive.R;
-import org.arcticsoft.bluebearlive.core.logic.Application;
-import org.arcticsoft.bluebearlive.core.logic.PacketManager;
-import org.arcticsoft.bluebearlive.core.logic.User;
-import org.arcticsoft.bluebearlive.fragments.NonSwipeableViewPager;
-import org.arcticsoft.bluebearlive.socket.ConnectionController;
+import org.arcticsoft.bluebearlive.fragments.FeedlineFragment;
+import org.arcticsoft.bluebearlive.fragments.NoticeFragment;
+import org.arcticsoft.bluebearlive.fragments.RandomUserFragment;
+import org.arcticsoft.bluebearlive.fragments.TestFragment;
+import org.arcticsoft.bluebearlive.fragments.UserProfileFragment;
 
 import java.util.ArrayList;
 
 import devlight.io.library.ntb.NavigationTabBar;
 
-import static java.lang.Thread.sleep;
-
 public class MainActivity extends AppCompatActivity {
 
-    Application application;
-    TextView textStatus;
-    Button connectToServer, goAuthPacket, goUserPacket, goCommandPacket;
     NavigationTabBar navigationTabBar;
-    NonSwipeableViewPager viewPager;
-    ArrayMap<Integer, View> pages;
+    FrameLayout fragment;
 
-    MainUserProfile mainUserProfile;
-    MainFeedLine mainFeedLine;
-    MainNotice mainNotice;
-    MainRandomUser mainRandomUser;
+    int active = -1;
+
+    private ArrayMap<Integer, Fragment> fragments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_horizontal_ntb);
-        viewPager = (NonSwipeableViewPager) findViewById(R.id.vp_horizontal_ntb);
         navigationTabBar = (NavigationTabBar) findViewById(R.id.ntb);
-        navigationTabBar.setIsSwiped(true);
+        fragment = (FrameLayout) findViewById(R.id.ufragment);
 
-        pages = new ArrayMap<>();
-        pages.put(0, LayoutInflater.from(
-                getBaseContext()).inflate(R.layout.main_feedline, null, false) );
-        pages.put(1, LayoutInflater.from(
-                getBaseContext()).inflate(R.layout.main_profile, null, false) );
-        pages.put(2, LayoutInflater.from(
-                getBaseContext()).inflate(R.layout.activity_main, null, false) );
-        pages.put(3, LayoutInflater.from(
-                getBaseContext()).inflate(R.layout.main_notice, null, false) );
-        pages.put(4, LayoutInflater.from(
-                getBaseContext()).inflate(R.layout.main_random_user, null, false) );
+        fragments = new ArrayMap<>();
+        fragments.put(0, new FeedlineFragment());
+        fragments.put(1, new UserProfileFragment());
+        fragments.put(2, new TestFragment());
+        fragments.put(3, new NoticeFragment());
+        fragments.put(4, new RandomUserFragment());
+
         initUI();
-
-
-        mainFeedLine = new MainFeedLine(pages.get(0));
-        mainUserProfile = new MainUserProfile(pages.get(1));
-        mainNotice = new MainNotice(pages.get(3));
-        mainRandomUser = new MainRandomUser(pages.get(4));
 
     }
 
 
     private void initUI(){
-        viewPager.setAdapter(new PagerAdapter() {
-            @Override
-            public int getCount() {
-                return 5;
-            }
-
-            @Override
-            public boolean isViewFromObject(final View view, final Object object) {
-                return view.equals(object);
-            }
-
-            @Override
-            public void destroyItem(final View container, final int position, final Object object) {
-                ((ViewPager) container).removeView((View) object);
-            }
-
-            @Override
-            public Object instantiateItem(final ViewGroup container, final int position) {
-                final View view = pages.get(position);
-
-//                final TextView txtPage = (TextView) view.findViewById(R.id.txt_vp_item_page);
-//                txtPage.setText(String.format("Page #%d", position));
-
-                container.addView(view);
-                return view;
-            }
-        });
 
         final String[] colors = getResources().getStringArray(R.array.default_preview);
         final ArrayList<NavigationTabBar.Model> models = new ArrayList<>();
@@ -139,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                         getResources().getDrawable(R.drawable.ic_fourth),
                         Color.parseColor(colors[3]))
 //                        .selectedIcon(getResources().getDrawable(R.drawable.ic_eighth))
-                        .title("Notice")
+                        .title("NoticeFragment")
                         .badgeTitle("icon")
                         .build()
         );
@@ -161,7 +106,41 @@ public class MainActivity extends AppCompatActivity {
 //        models.get(3).updateBadgeTitle("Here some title like NEW or some integer value");
 
         navigationTabBar.setModels(models);
-        navigationTabBar.setViewPager(viewPager, 2);
+        //navigationTabBar.setViewPager(viewPager);
+
+        navigationTabBar.setOnTabBarSelectedIndexListener(new NavigationTabBar.OnTabBarSelectedIndexListener() {
+            @Override
+            public void onStartTabSelected(final NavigationTabBar.Model model, final int index) {
+
+            }
+
+            @Override
+            public void onEndTabSelected(final NavigationTabBar.Model model, final int index) {
+
+                final Fragment fragment = fragments.get(index);
+                if(!fragment.isAdded()){
+                    Log.d("ADD", index+"");
+                    Log.d("isAdded", fragment.isAdded()+"");
+                    if(active != -1){
+                        getSupportFragmentManager().beginTransaction().hide(fragments.get(active)).commit();
+                    }
+                    getSupportFragmentManager().beginTransaction().add(R.id.ufragment, fragment).commit();
+                    active = index;
+                } else if (fragment.isHidden()){
+                    Log.d("SHOW", index+"");
+                    Log.d("isHidden", fragment.isHidden()+"");
+                    getSupportFragmentManager().beginTransaction().hide(fragments.get(active)).commit();
+                    getSupportFragmentManager().beginTransaction().show(fragment).commit();
+                    active = index;
+                }else {
+                    Log.d("isAdded", fragment.isAdded()+"");
+                    Log.d("isHidden", fragment.isHidden()+"");
+                    Log.d("THIS", index+"");
+                }
+                model.hideBadge();
+            }
+        });
+
         navigationTabBar.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(final int position, final float positionOffset, final int positionOffsetPixels) {
@@ -170,7 +149,6 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(final int position) {
-                navigationTabBar.getModels().get(position).hideBadge();
             }
 
             @Override

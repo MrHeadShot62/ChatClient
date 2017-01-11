@@ -16,7 +16,7 @@ public class Error extends AErrorCore {
     private String errorData;
 
     public Error(int errorcode, User errouser, ErrorType errortype) {
-        ERRORNAME = ErrorCode.ErrorsCodeInProject.get(errorcode);
+        ERRORNAME = ErrorCode.getInstance().ErrorsCodeInProject.get(errorcode);
         ERRORCODE = errorcode;
         ERROUSER = errouser;
         ERRORTYPE = errortype;
