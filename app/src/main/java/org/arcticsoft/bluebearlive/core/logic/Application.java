@@ -5,6 +5,7 @@ import android.util.Log;
 import com.mrheadshot62.api.types.AuthPacket;
 
 import org.arcticsoft.bluebearlive.core.aLogic.AApplication;
+import org.arcticsoft.bluebearlive.core.logic.Temp.ReportPacket;
 import org.arcticsoft.bluebearlive.socket.ClientThread;
 import org.arcticsoft.bluebearlive.socket.ConnectionController;
 
@@ -108,5 +109,11 @@ public class Application extends AApplication {
     @Override
     public boolean reconnectServer() {
         return false;
+    }
+
+    @Override
+    public boolean sendReportPacket(int userId, String message, int typeReport, int ReportOnUserId) {
+        PacketManager.PacketGenerator(getUserApplication(), new ReportPacket(userId, message, typeReport, ReportOnUserId) );
+        return true;
     }
 }
