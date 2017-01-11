@@ -27,6 +27,9 @@ public class MainHandler {
                 case TypesAnswer.ONLYCODE:
                     new AnswerHandler().handlePacket(p);
                     break;
+                case TypesAnswer.REPORTPACKET:
+                    new ReportHandler().handlePacket(p);
+                    break;
                 default:
                     break;
             }

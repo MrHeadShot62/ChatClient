@@ -5,6 +5,7 @@ import com.mrheadshot62.api.Types;
 import com.mrheadshot62.api.types.*;
 import com.mrheadshot62.api.MultiPacket;
 
+import org.arcticsoft.bluebearlive.core.logic.Temp.ReportPacket;
 import org.arcticsoft.bluebearlive.socket.ConnectionController;
 
 /**
@@ -53,6 +54,10 @@ public class PacketManager{
 
     public static void PacketGenerator(User user, UserPacket userPacket) {
         sendPackets(new MultiPacket(new Packet(createPermissionPacket(user), Types.PERMISSION), new Packet(userPacket, Types.USER)));
+    }
+
+    public static void PacketGenerator(User user, ReportPacket reportPacket){
+        sendPackets(new MultiPacket(new Packet(createPermissionPacket(user), Types.PERMISSION), new Packet(reportPacket, Types.REPORT))); //TODO Andrey add yo Types
     }
 
     private static PermissionPacket createPermissionPacket(User user){
