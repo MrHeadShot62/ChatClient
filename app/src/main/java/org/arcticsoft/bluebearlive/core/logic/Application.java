@@ -1,5 +1,6 @@
 package org.arcticsoft.bluebearlive.core.logic;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.mrheadshot62.api.types.AuthPacket;
@@ -19,18 +20,17 @@ public class Application extends AApplication {
 
     private User userAplication;
     private ClientThread clientThread;
-
+    private Context context;
     private static Application instance = null;
 
     public static Application getInstance(){
         if(instance == null){
             instance = new Application();
-            return  instance;
+            return instance;
         }else {
             return instance;
         }
     }
-
     public Application() {
 
     }
@@ -124,5 +124,13 @@ public class Application extends AApplication {
     public boolean sendReportPacket(int userId, String message, int typeReport, int ReportOnUserId) {
 //        PacketManager.PacketGenerator(getUserApplication(), new ReportPacket(userId, message, typeReport, ReportOnUserId) );
         return true;
+    }
+
+    public Context getContext() {
+        return context;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
     }
 }

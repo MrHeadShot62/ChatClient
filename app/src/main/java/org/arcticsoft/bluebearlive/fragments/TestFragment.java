@@ -37,6 +37,7 @@ public class TestFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_main, null);
         Application application = Application.getInstance();
+        application.setContext(getActivity().getApplicationContext());
 //
         textStatus = (TextView) v.findViewById(R.id.status_request);
         connectToServer = (Button) v.findViewById(R.id.buttonConnect);

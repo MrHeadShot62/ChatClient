@@ -16,7 +16,7 @@ class AuthHandler extends AAuthHandler {
     @Override
     protected void handleAuthPacket(ServerAnswerAuthPacket serverAnswerAuthPacket) {
         if (!Application.getInstance().getUserApplication().isAuth){
-            User.sync.notify();
+//            User.sync.notify();
             Application.getInstance().getUserApplication().isAuth=true;
         }
         Log.d(TAG, "nameUser: "+serverAnswerAuthPacket.getNameUser());
