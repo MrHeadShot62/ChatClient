@@ -1,7 +1,5 @@
 package org.arcticsoft.bluebearlive.core.logic;
 
-import android.support.v4.util.ArrayMap;
-
 /**
  * Created by DmitriyRoot on 05.01.2017.
  */

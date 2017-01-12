@@ -3,7 +3,6 @@ package org.arcticsoft.bluebearlive.core.handler;
 import android.util.Log;
 
 import com.mrheadshot62.api.Packet;
-import com.mrheadshot62.api.Types;
 import com.mrheadshot62.api.types.PermissionPacket;
 
 import org.arcticsoft.bluebearlive.core.logic.TypesAnswer;

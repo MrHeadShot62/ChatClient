@@ -1,6 +1,8 @@
-package org.arcticsoft.bluebearlive.core.logic.Temp;
+package org.arcticsoft.bluebearlive.core.logic;
 
 import android.util.ArrayMap;
+
+import com.mrheadshot62.api.types.TypeAnswerReport;
 
 /**
  * Created by Роман on 11.01.2017.
@@ -10,7 +12,7 @@ public class TypeAnswerReportMessage {
 
     private static TypeAnswerReportMessage instance = null;
 
-    public ArrayMap<Integer, String> answerReportMessage = new ArrayMap<>();
+    public ArrayMap<Byte, String> answerReportMessage = new ArrayMap<>();
 
     private TypeAnswerReportMessage() {
         answerReportMessage.put(TypeAnswerReport.OK, "Your report sended");

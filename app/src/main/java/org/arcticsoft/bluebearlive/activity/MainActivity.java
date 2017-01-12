@@ -173,40 +173,6 @@ public class MainActivity extends AppCompatActivity {
         }, 500);
     }
 
-//        Application application = Application.getInstance();
-//
-//        textStatus = (TextView) findViewById(R.id.status_request);
-//        connectToServer = (Button) findViewById(R.id.buttonConnect);
-//        goAuthPacket = (Button) findViewById(R.id.buttonAuth);
-//        goUserPacket = (Button) findViewById(R.id.buttonSendUserPacket);
-//        goCommandPacket = (Button) findViewById(R.id.buttonSendCommandPacket);
-//
-//        connectToServer.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                application.setServerConnection();
-//            }
-//        });
-//
-//        goAuthPacket.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                application.sendAuth();
-//            }
-//        });
-//
-//        goUserPacket.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                PacketManager.PacketGenerator(application.getUserApplication(), new UserPacket("name"));
-//            }
-//        });
-//
-//        goCommandPacket.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                PacketManager.PacketGenerator(application.getUserApplication(), new CommandPacket(22, "sd"));
-//            }
-//        });
+
 
 }

@@ -1,5 +1,7 @@
 package org.arcticsoft.bluebearlive.core.logic;
 
+import com.mrheadshot62.api.types.AuthPacket;
+
 import org.arcticsoft.bluebearlive.core.aLogic.AUser;
 
 /**
@@ -13,8 +15,9 @@ public class User extends AUser {
     private String countryUser;
     private Session session;
     private int permissionLevel;
-
+    public boolean isAuth=false;
     private int id = 0;
+    public static final Object sync = new Object();
 
     private boolean isLogin = false;
     private boolean isBanned  = false;
@@ -22,12 +25,28 @@ public class User extends AUser {
     private static User instance = null;
 
     public static User authUser(String loginUser, String nameUser, String countryUser, String sessionKey, int permissionLevel) {
-        if(instance != null){
+        if(!instance.isAuth){
+            PacketManager.PacketGenerator(instance, new AuthPacket("guest", "guest"));
+            while(true){
+                if (instance.isAuth){
+                    break;
+                }else{
+                    synchronized (sync){
+                        try {
+                            sync.wait();
+                            break;
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
             instance.loginUser = loginUser;
             instance.nameUser = nameUser;
             instance.countryUser = countryUser;
             instance.session = new Session(sessionKey);
             instance.permissionLevel = permissionLevel;
+            instance.isAuth = true;
             return getInstance();
         }else {
             instance = new User(loginUser, nameUser, countryUser, sessionKey , permissionLevel);
@@ -36,12 +55,8 @@ public class User extends AUser {
     }
 
     public static User guestUser(String loginUser, String nameUser, String countryUser){
-        if(instance == null){
-            instance = new User(loginUser, nameUser, countryUser, "guest" , PermissionLevel.AUTH);
-            return getInstance();
-        }else {
-            return getInstance();
-        }
+        instance = new User(loginUser, nameUser, countryUser, "guest" , PermissionLevel.AUTH);
+        return getInstance();
     }
 
     public static synchronized User getInstance(){

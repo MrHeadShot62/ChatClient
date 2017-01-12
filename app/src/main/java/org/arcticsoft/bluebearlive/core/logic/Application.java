@@ -5,7 +5,6 @@ import android.util.Log;
 import com.mrheadshot62.api.types.AuthPacket;
 
 import org.arcticsoft.bluebearlive.core.aLogic.AApplication;
-import org.arcticsoft.bluebearlive.core.logic.Temp.ReportPacket;
 import org.arcticsoft.bluebearlive.socket.ClientThread;
 import org.arcticsoft.bluebearlive.socket.ConnectionController;
 
@@ -16,10 +15,9 @@ import org.arcticsoft.bluebearlive.socket.ConnectionController;
 public class Application extends AApplication {
 
     private static final String TAG = "APPLICATION";
-    private static final String SERVERIP = "194.117.253.99";
+    private static final String SERVERIP = "192.168.0.102";
 
     private User userAplication;
-    private String serverIP;
     private ClientThread clientThread;
 
     private static Application instance = null;
@@ -44,9 +42,20 @@ public class Application extends AApplication {
             Log.d(TAG, "CreateNewGuestUser");
             return true;
         }else {
-            userAplication = User.getInstance();
-            Log.d(TAG, "LoadReadyUser");
-            return false;
+            if (User.getInstance().getPermissionLevel() < PermissionLevel.GUEST){
+                userAplication = User.getInstance();
+                return true;
+            }else {
+                Thread t = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        User.authUser("guest", "guest", null, "guest" , PermissionLevel.GUEST);
+                        Log.d(TAG, "LoadReadyUser");
+                    }
+                });
+                t.start();
+                return false;
+            }
         }
     }
 
@@ -113,7 +122,7 @@ public class Application extends AApplication {
 
     @Override
     public boolean sendReportPacket(int userId, String message, int typeReport, int ReportOnUserId) {
-        PacketManager.PacketGenerator(getUserApplication(), new ReportPacket(userId, message, typeReport, ReportOnUserId) );
+//        PacketManager.PacketGenerator(getUserApplication(), new ReportPacket(userId, message, typeReport, ReportOnUserId) );
         return true;
     }
 }

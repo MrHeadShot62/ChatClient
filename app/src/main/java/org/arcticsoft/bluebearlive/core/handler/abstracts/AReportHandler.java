@@ -1,8 +1,7 @@
 package org.arcticsoft.bluebearlive.core.handler.abstracts;
 
 import com.mrheadshot62.api.Packet;
-
-import org.arcticsoft.bluebearlive.core.logic.Temp.ServerAnswerReportPacket;
+import com.mrheadshot62.api.types.answer.ServerAnswerReportPacket;
 
 /**
  * Created by novak on 05.01.2017.
