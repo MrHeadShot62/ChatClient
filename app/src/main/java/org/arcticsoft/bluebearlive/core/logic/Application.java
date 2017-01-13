@@ -34,7 +34,9 @@ public class Application extends AApplication {
         }
     }
 
-
+    public void initDataBase(Context context){
+        new DataBase(context);
+    }
 
     public Application() {
 
@@ -161,5 +163,6 @@ public class Application extends AApplication {
 
     public void setContext(Context context) {
         this.context = context;
+        initDataBase(context);
     }
 }

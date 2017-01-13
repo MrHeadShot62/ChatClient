@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.mrheadshot62.api.types.*;
+import java.util.Map;
 
 
 /**
@@ -60,8 +60,19 @@ public class DataBase extends SQLiteOpenHelper {
             "  registration_data TIMESTAMP);\n" +
             "\n";
 
+    private static DataBase instance;
+
     public DataBase(Context context) {
         super(context, DB_NAME, null,DB_VERSION);
+        DataBase.instance = this;
+    }
+
+    public static DataBase getInstance() throws InstantiationException{
+        if (instance !=null){
+            return instance;
+        }else{
+            throw new InstantiationException("DataBase not create");
+        }
     }
 
     public void setUser(com.mrheadshot62.api.types.User u){
@@ -83,6 +94,9 @@ public class DataBase extends SQLiteOpenHelper {
         cv.put(AGE, u.getAge());
         cv.put(USER_ID, u.getId());
         getWritableDatabase().insert(USER_TABLE, null, cv);
+        for (Map.Entry<String, Object> c:cv.valueSet()) {
+            Log.d("DB", c.getKey()+": "+c.getValue());
+        }
     }
 
     public com.mrheadshot62.api.types.User getUser() {

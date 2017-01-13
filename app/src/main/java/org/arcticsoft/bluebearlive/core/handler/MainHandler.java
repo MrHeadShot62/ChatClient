@@ -29,7 +29,7 @@ public class MainHandler {
                     break;
                 case TypesAnswer.USERPACKET:
                     //TODO Большой Ди, ты знаешь что делать... Database.setUser(User u);Database.getUser();
-
+                    new UserHandler().handlePacket(p);
                 case TypesAnswer.REPORTPACKET:
                     new ReportHandler().handlePacket(p);
                     break;
