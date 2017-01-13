@@ -3,6 +3,8 @@ package org.arcticsoft.bluebearlive.core.logic;
 import android.content.Context;
 import android.util.Log;
 
+
+import com.mrheadshot62.api.PermissionLevel;
 import com.mrheadshot62.api.types.AuthPacket;
 
 import org.arcticsoft.bluebearlive.core.aLogic.AApplication;
@@ -31,8 +33,35 @@ public class Application extends AApplication {
             return instance;
         }
     }
+
+
+
     public Application() {
 
+    }
+
+    public void setGuest(){
+        userAplication = User.guestUser("guest", "TestName", "TestCountry");
+        Log.d(TAG, "CreateNewGuestUser");
+    }
+
+    public void authUser(){
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                User.authUser("guest", "guest", null, "guest" , getUserPermission());
+                Log.d(TAG, "LoadReadyUser");
+            }
+        });
+        t.start();
+    }
+
+    public void loadUser(){
+        if (User.getInstance() == null){
+            Log.d("user", "null "+getUserApplication());
+        }else {
+            Log.d("user", "notnull "+getUserPermission());
+        }
     }
 
     @Override

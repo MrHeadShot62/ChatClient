@@ -17,7 +17,7 @@ public abstract class AApplication {
 
     public AApplication() {
         try {
-            setUserApplication();
+//            setUserApplication();
             //setUserLanguage();
             //setServerIP();
         }catch (Exception e){

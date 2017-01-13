@@ -27,16 +27,6 @@ public class User extends AUser {
     public static User authUser(String loginUser, String nameUser, String countryUser, String sessionKey, int permissionLevel) {
         if(!instance.isAuth){
             PacketManager.PacketGenerator(instance, new AuthPacket("guest", "guest"));
-//            while(true){
-//                if (instance.isAuth){
-//                    break;
-//                }else{
-////                    try {sync.wait();} catch (InterruptedException e) {e.printStackTrace();}
-////                    synchronized (sync) {
-////                        break;
-////                    }
-//                }
-//            }
             instance.loginUser = loginUser;
             instance.nameUser = nameUser;
             instance.countryUser = countryUser;
@@ -51,7 +41,7 @@ public class User extends AUser {
     }
 
     public static User guestUser(String loginUser, String nameUser, String countryUser){
-        instance = new User(loginUser, nameUser, countryUser, "guest" , PermissionLevel.AUTH);
+        instance = new User(loginUser, nameUser, countryUser, "guest" , PermissionLevel.GUEST);
         return getInstance();
     }
 

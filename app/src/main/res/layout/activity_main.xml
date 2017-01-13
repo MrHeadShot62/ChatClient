@@ -33,11 +33,20 @@
         android:id="@+id/buttonAuth" />
 
     <Button
-        android:text="Отправить пакет User"
+        android:text="authUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/buttonSendUserPacket" />
-
+        android:id="@+id/buttonFAuth" />
+    <Button
+        android:text="guest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonRetryAuth" />
+    <Button
+        android:text="load"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonLoadAuth" />
     <Button
         android:text="Отправить пакет команды"
         android:layout_width="match_parent"

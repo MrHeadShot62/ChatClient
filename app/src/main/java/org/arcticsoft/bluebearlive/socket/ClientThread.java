@@ -40,12 +40,7 @@ public class ClientThread{
     public synchronized boolean send(MultiPacket p){
         AsyncTask<MultiPacket, Void, Boolean> task = new SendMultiPacket();
         boolean success=false;
-        try {
-            task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, p);
-            success = task.get();
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
+        task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, p);
         return success;
     }
 
@@ -57,7 +52,7 @@ public class ClientThread{
                 if (ConnectionController.isStarted){
                     try{
                         outputStream.writeMultiPacket(multiPackets[0]);
-                        countReconnect = 0;
+                        countReconnect = 5;
                         setCheckSendPacket(true);
                         Log.e(TAG, "Packet sended");
                         return true;

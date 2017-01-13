@@ -42,7 +42,6 @@ public class TestFragment extends Fragment {
         textStatus = (TextView) v.findViewById(R.id.status_request);
         connectToServer = (Button) v.findViewById(R.id.buttonConnect);
         goAuthPacket = (Button) v.findViewById(R.id.buttonAuth);
-        goUserPacket = (Button) v.findViewById(R.id.buttonSendUserPacket);
         goCommandPacket = (Button) v.findViewById(R.id.buttonSendCommandPacket);
 
         connectToServer.setOnClickListener(new View.OnClickListener() {
@@ -59,10 +58,24 @@ public class TestFragment extends Fragment {
             }
         });
 
-        goUserPacket.setOnClickListener(new View.OnClickListener() {
+        v.findViewById(R.id.buttonFAuth).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PacketManager.PacketGenerator(application.getUserApplication(), new UserPacket("name"));
+                Application.getInstance().authUser();
+            }
+        });
+
+        v.findViewById(R.id.buttonLoadAuth).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Application.getInstance().loadUser();
+            }
+        });
+
+        v.findViewById(R.id.buttonRetryAuth).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Application.getInstance().setGuest();
             }
         });
 
