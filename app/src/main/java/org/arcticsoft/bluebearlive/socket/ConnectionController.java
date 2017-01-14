@@ -33,6 +33,7 @@ public class ConnectionController {
                     Socket socket = new Socket(ip, 27015);
                     ConnectionController.input = new BlueBearInputStream(socket.getInputStream());
                     ConnectionController.output = new BlueBearOutputStream(socket.getOutputStream());
+                    new ServerListener(input).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     Log.d(TAG, String.format("connected to %s", ip));
                     ConnectionController.isStarted = true;
                     ConnectionController.isConnected =true;
