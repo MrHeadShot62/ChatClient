@@ -1,6 +1,8 @@
 package org.arcticsoft.bluebearlive.core.handler;
 
+import com.mrheadshot62.api.types.User;
 import com.mrheadshot62.api.types.UserPacket;
+import com.mrheadshot62.api.types.answer.ServerAnswerUserPacket;
 
 import org.arcticsoft.bluebearlive.core.handler.abstracts.AUserHandler;
 
@@ -9,7 +11,7 @@ import org.arcticsoft.bluebearlive.core.handler.abstracts.AUserHandler;
  */
 public class UserHandler extends AUserHandler {
     @Override
-    protected void handleCommandPacket(UserPacket userPacket) {
-
+    protected void handleCommandPacket(ServerAnswerUserPacket userPacket) {
+        //
     }
 }

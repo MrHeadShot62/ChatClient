@@ -1,21 +1,27 @@
 package org.arcticsoft.bluebearlive.socket;
 
+import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.mrheadshot62.api.MultiPacket;
 import com.mrheadshot62.api.streams.BlueBearInputStream;
 import com.mrheadshot62.api.streams.BlueBearOutputStream;
 
+import org.arcticsoft.bluebearlive.core.logic.Application;
+
 import java.net.Socket;
+import java.util.concurrent.ExecutionException;
+
 /**
  * Created by novak on 05.01.2017.
  */
 
-public class ClientThread extends Thread {
+public class ClientThread{
 
     private static final String TAG = "ClientThread";
 
-    private final String ip;
+    private String ip;
     private ServerListener listener;
     private BlueBearOutputStream outputStream;
     private int countReconnect = 5;
@@ -26,59 +32,45 @@ public class ClientThread extends Thread {
         this.ip = ip;
     }
 
-    @Override
-    public void run() {
-        Log.d(TAG, "Start Thread connect server");
-        try{
-            Log.d(TAG, "Connection attempt");
-            Socket socket = new Socket(ip, 27015);
-            BlueBearInputStream input = new BlueBearInputStream(socket.getInputStream());
-            outputStream = new BlueBearOutputStream(socket.getOutputStream());
-            new ServerListener(input).execute();
-            ConnectionController.isStarted = true;
-            Log.d(TAG, String.format("Connected! IP_ADDRESS -> %s", socket.getInetAddress().getHostAddress()));
-        }catch(Exception e){
-            Log.e(TAG, "Failed connected", e);
-        }
+    public boolean start(){
+        new Connector().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        return true;
     }
 
-    public synchronized boolean sendMultiPacket(final MultiPacket multiPacket){
-        Log.d(TAG, "Send MultiPacket on Server");
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                do {
-                    Log.w(TAG, "Attempt sending packet on Server. Remaining - "+countReconnect);
-                    if (ConnectionController.isStarted){
-                        try{
-                            outputStream.writeMultiPacket(multiPacket);
-                            countReconnect = 0;
-                            setCheckSendPacket(true);
-                            Log.e(TAG, "Packet sended");
-                        } catch (Exception e) {
-                            countReconnect--;
-                            Log.e(TAG, "Error sending Packet", e);
-                        }
-                    }else {
-                        try {
-                            sleep(3000);
-                            Log.e(TAG, "Connect to Server off. Packet not sended");
-                            countReconnect--;
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }while (countReconnect != 0);
-                countReconnect = 5;
-            }
-        }).start();
+    public synchronized boolean send(MultiPacket p){
+        AsyncTask<MultiPacket, Void, Boolean> task = new SendMultiPacket();
+        boolean success=false;
+        task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, p);
+        return success;
+    }
 
-        if(isCheckSendPacket()){
-            Log.d(TAG, "Packet is sending");
-            resetStatusPacketManager();
-            return true;
-        }else {
-            Log.e(TAG, "Error! Packet not sending");
+    private class SendMultiPacket extends AsyncTask<MultiPacket, Void, Boolean>{
+        @Override
+        protected Boolean doInBackground(MultiPacket... multiPackets) {
+            do {
+                Log.w(TAG, "Attempt sending packet on Server. Remaining - "+countReconnect);
+                if (ConnectionController.isStarted){
+                    try{
+                        outputStream.writeMultiPacket(multiPackets[0]);
+                        countReconnect = 5;
+                        setCheckSendPacket(true);
+                        Log.e(TAG, "Packet sended");
+                        return true;
+                    } catch (Exception e) {
+                        countReconnect--;
+                        Log.e(TAG, "Error sending Packet", e);
+                    }
+                }else {
+                    try {
+                        Thread.currentThread().sleep(3000);
+                        Log.e(TAG, "Connect to Server off. Packet not sended");
+                        countReconnect--;
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }while (countReconnect != 0);
+            countReconnect = 5;
             return false;
         }
     }
@@ -95,4 +87,47 @@ public class ClientThread extends Thread {
         this.checkSendPacket = checkSendPacket;
     }
 
+    private class Connector extends AsyncTask<Void, Void, Boolean>{
+        private String ipadr;
+        private BlueBearInputStream input;
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+            if (aBoolean){
+                Toast.makeText(Application.getInstance().getContext(), String.format("Connected! IP_ADDRESS -> %s", ipadr), Toast.LENGTH_LONG).show();
+                ConnectionController.isStarted = true;
+            }else{
+                Toast.makeText(Application.getInstance().getContext(), "Failed to connect", Toast.LENGTH_LONG).show();
+            }
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+            new ServerListener(input).execute();
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            try{
+                Log.d(TAG, "Connection attempt");
+                Socket socket = new Socket(ip, 27015);
+                input = new BlueBearInputStream(socket.getInputStream());
+                outputStream = new BlueBearOutputStream(socket.getOutputStream());
+                ipadr = socket.getInetAddress().getHostAddress();
+                publishProgress();
+                Log.d(TAG, String.format("Connected! IP_ADDRESS -> %s", socket.getInetAddress().getHostAddress()));
+            }catch(Exception e){
+                Log.e(TAG, "Failed connected", e);
+                return false;
+            }
+            return true;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Toast.makeText(Application.getInstance().getContext(), "Connection attempt", Toast.LENGTH_SHORT).show();
+        }
+    }
 }

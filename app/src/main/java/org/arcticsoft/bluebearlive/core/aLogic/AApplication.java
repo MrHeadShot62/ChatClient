@@ -1,5 +1,6 @@
 package org.arcticsoft.bluebearlive.core.aLogic;
 
+import android.content.Context;
 import android.util.Log;
 
 import org.arcticsoft.bluebearlive.core.logic.Session;
@@ -17,7 +18,7 @@ public abstract class AApplication {
 
     public AApplication() {
         try {
-            setUserApplication();
+//            setUserApplication();
             //setUserLanguage();
             //setServerIP();
         }catch (Exception e){
@@ -26,6 +27,8 @@ public abstract class AApplication {
     }
 
     public abstract boolean setUserApplication();
+
+    public abstract void initDataBase(Context context);
 
     //public abstract void setUserLanguage();
 

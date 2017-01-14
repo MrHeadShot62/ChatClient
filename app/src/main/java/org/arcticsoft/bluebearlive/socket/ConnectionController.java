@@ -20,7 +20,6 @@ public class ConnectionController {
         try {
             clientThread = new ClientThread(Application.getInstance().getServerIP());
             clientThread.start();
-            clientThread.join();
             return true;
         }catch (Exception e){
             Log.e("NewClientThread", "Не удалось подключиться к серверу");
@@ -30,7 +29,7 @@ public class ConnectionController {
     }
 
     public static void sendMultiPacket(MultiPacket packet){
-        clientThread.sendMultiPacket(packet);
+        clientThread.send(packet);
     }
 
     public static ClientThread getClientThread() {

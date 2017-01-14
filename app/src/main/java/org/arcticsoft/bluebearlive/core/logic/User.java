@@ -1,5 +1,6 @@
 package org.arcticsoft.bluebearlive.core.logic;
 
+import com.mrheadshot62.api.PermissionLevel;
 import com.mrheadshot62.api.types.AuthPacket;
 
 import org.arcticsoft.bluebearlive.core.aLogic.AUser;
@@ -27,20 +28,6 @@ public class User extends AUser {
     public static User authUser(String loginUser, String nameUser, String countryUser, String sessionKey, int permissionLevel) {
         if(!instance.isAuth){
             PacketManager.PacketGenerator(instance, new AuthPacket("guest", "guest"));
-            while(true){
-                if (instance.isAuth){
-                    break;
-                }else{
-                    synchronized (sync){
-                        try {
-                            sync.wait();
-                            break;
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
             instance.loginUser = loginUser;
             instance.nameUser = nameUser;
             instance.countryUser = countryUser;
@@ -55,7 +42,8 @@ public class User extends AUser {
     }
 
     public static User guestUser(String loginUser, String nameUser, String countryUser){
-        instance = new User(loginUser, nameUser, countryUser, "guest" , PermissionLevel.AUTH);
+        instance = new User(loginUser, nameUser, countryUser, "guest" , PermissionLevel.GUEST);
+
         return getInstance();
     }
 
@@ -78,20 +66,12 @@ public class User extends AUser {
 
     @Override
     public boolean isLogin() {
-        if(this.isLogin){
-            return true;
-        }else {
-            return false;
-        }
+        return isLogin;
     }
 
     @Override
     public boolean isBanned() {
-        if(this.isBanned){
-            return true;
-        }else {
-            return false;
-        }
+        return isBanned;
     }
 
     public String getLoginUser() {
