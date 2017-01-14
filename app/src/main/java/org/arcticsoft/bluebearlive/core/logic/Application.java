@@ -1,16 +1,19 @@
 package org.arcticsoft.bluebearlive.core.logic;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.util.Log;
 
 
+import com.mrheadshot62.api.MultiPacket;
 import com.mrheadshot62.api.PermissionLevel;
 import com.mrheadshot62.api.types.AuthPacket;
 import com.mrheadshot62.api.types.ReportPacket;
 
 import org.arcticsoft.bluebearlive.core.aLogic.AApplication;
-import org.arcticsoft.bluebearlive.socket.ClientThread;
 import org.arcticsoft.bluebearlive.socket.ConnectionController;
+
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by DmitriyRoot on 06.01.2017.
@@ -19,10 +22,9 @@ import org.arcticsoft.bluebearlive.socket.ConnectionController;
 public class Application extends AApplication {
 
     private static final String TAG = "APPLICATION";
-    private static final String SERVERIP = "194.117.253.208";
+    private static final String SERVERIP = "192.168.0.102";
 
     private User userAplication;
-    private ClientThread clientThread;
     private Context context;
     private static Application instance = null;
 
@@ -98,10 +100,7 @@ public class Application extends AApplication {
 
     @Override
     public boolean setServerConnection() {
-        if(ConnectionController.start()){
-            // TODO
-        }
-        return true;
+        return ConnectionController.start(getServerIP());
     }
 
     @Override
@@ -163,6 +162,49 @@ public class Application extends AApplication {
             }
         } catch (InstantiationException e) {
             e.printStackTrace();
+        }
+    }
+
+    public boolean sendPacket(MultiPacket p){
+        AsyncTask<MultiPacket, Void, Boolean> task = new SendMultiPacket();
+        task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, p);
+        try {
+            return task.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    private static class SendMultiPacket extends AsyncTask<MultiPacket, Void, Boolean> {
+        private static int countReconnect=5;
+
+        @Override
+        protected Boolean doInBackground(MultiPacket... multiPackets) {
+            do {
+                Log.w(TAG, "Attempt sending packet on Server. Remaining - "+countReconnect);
+                if (ConnectionController.isStarted){
+                    try{
+                        ConnectionController.getOutput().writeMultiPacket(multiPackets[0]);
+                        countReconnect = 5;
+                        Log.e(TAG, "Packet sended");
+                        return true;
+                    } catch (Exception e) {
+                        countReconnect--;
+                        Log.e(TAG, "Error sending Packet", e);
+                    }
+                }else {
+                    try {
+                        Thread.currentThread().sleep(3000);
+                        Log.e(TAG, "Connect to Server off. Packet not sended");
+                        countReconnect--;
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }while (countReconnect >= 0);
+            countReconnect = 5;
+            return false;
         }
     }
 }

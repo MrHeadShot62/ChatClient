@@ -71,7 +71,7 @@ public class PacketManager{
     }
 
     private static int sendPackets(MultiPacket multiPacket) {
-        ConnectionController.sendMultiPacket(multiPacket);
+        Application.getInstance().sendPacket(multiPacket);
         return 0;
     }
 }

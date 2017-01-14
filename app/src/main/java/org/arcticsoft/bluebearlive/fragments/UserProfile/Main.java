@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
+import com.mrheadshot62.api.types.User;
 import com.unnamed.b.atv.model.TreeNode;
 import com.unnamed.b.atv.view.AndroidTreeView;
 
@@ -20,6 +21,7 @@ import org.arcticsoft.bluebearlive.core.UserProfile.IconTreeItemHolder;
 import org.arcticsoft.bluebearlive.core.UserProfile.PlaceHolderHolder;
 import org.arcticsoft.bluebearlive.core.UserProfile.ProfileHolder;
 import org.arcticsoft.bluebearlive.core.UserProfile.fragment.SocialViewHolder;
+import org.arcticsoft.bluebearlive.core.logic.DataBase;
 
 /**
  * Created by florentchampigny on 24/04/15.
@@ -49,7 +51,17 @@ public class Main extends Fragment {
         TreeNode myProfileInfo = new TreeNode(new IconTreeItemHolder.IconTreeItem(R.string.ic_person, "Info")).setViewHolder(new ProfileHolder(getActivity()));
         TreeNode myProfileSettings = new TreeNode(new IconTreeItemHolder.IconTreeItem(R.string.ic_person, "Settings")).setViewHolder(new ProfileHolder(getActivity()));
         TreeNode myProfileAction = new TreeNode(new IconTreeItemHolder.IconTreeItem(R.string.ic_person, "Actions")).setViewHolder(new ProfileHolder(getActivity()));
-        addMyProfileInfo(myProfileInfo);
+        User user=null;
+        try {
+            user = DataBase.getInstance().getUser();
+        } catch (java.lang.InstantiationException e) {
+            e.printStackTrace();
+        }
+        if (user==null){
+            addMyProfileInfo(myProfileInfo);
+        }else{
+            addMyProfileInfo(myProfileInfo, user);
+        }
         addMyProfileSettings(myProfileSettings);
         addMyProfileAction(myProfileAction);
         root.addChildren(myProfileInfo, myProfileSettings, myProfileAction);
@@ -82,17 +94,43 @@ public class Main extends Fragment {
     }
 
     private void addMyProfileInfo(TreeNode profile) {
+
         TreeNode socialNetworks = new TreeNode(new IconTreeItemHolder.IconTreeItem(R.string.ic_people, "Social")).setViewHolder(new HeaderHolder(getActivity()));
         TreeNode places = new TreeNode(new IconTreeItemHolder.IconTreeItem(R.string.ic_place, "Places")).setViewHolder(new HeaderHolder(getActivity()));
 
-        TreeNode facebook = new TreeNode(new SocialViewHolder.SocialItem(R.string.ic_account_box, "First name", "Dima")).setViewHolder(new SocialViewHolder(getActivity()));
-        TreeNode facebook2 = new TreeNode(new SocialViewHolder.SocialItem(R.string.ic_account_box, "Two name", "Andreevich")).setViewHolder(new SocialViewHolder(getActivity()));
+        TreeNode facebook = new TreeNode(new SocialViewHolder.SocialItem(R.string.ic_account_box, "First name", "fname")).setViewHolder(new SocialViewHolder(getActivity()));
+        TreeNode facebook2 = new TreeNode(new SocialViewHolder.SocialItem(R.string.ic_account_box, "Two name", "lname")).setViewHolder(new SocialViewHolder(getActivity()));
         TreeNode facebook3 = new TreeNode(new SocialViewHolder.SocialItem(R.string.ic_tag_faces, "Nick name", "Hennessy")).setViewHolder(new SocialViewHolder(getActivity()));
         TreeNode facebook4 = new TreeNode(new SocialViewHolder.SocialItem(R.string.ic_star_outline, "Status in App", "Administrator")).setViewHolder(new SocialViewHolder(getActivity()));
         TreeNode facebook5 = new TreeNode(new SocialViewHolder.SocialItem(R.string.ic_extension, "Age", "19")).setViewHolder(new SocialViewHolder(getActivity()));
         TreeNode linkedin = new TreeNode(new SocialViewHolder.SocialItem(R.string.ic_earth, "Country", "UA")).setViewHolder(new SocialViewHolder(getActivity()));
         TreeNode google = new TreeNode(new SocialViewHolder.SocialItem(R.string.ic_gps_fixed, "City", "Chernigov")).setViewHolder(new SocialViewHolder(getActivity()));
         TreeNode twitter = new TreeNode(new SocialViewHolder.SocialItem(R.string.ic_people, "Count Friends", "81")).setViewHolder(new SocialViewHolder(getActivity()));
+        TreeNode twitter1 = new TreeNode(new SocialViewHolder.SocialItem(R.string.ic_add_box, "Date Regist", "11.01.2017")).setViewHolder(new SocialViewHolder(getActivity()));
+        TreeNode twitter2 = new TreeNode(new SocialViewHolder.SocialItem(R.string.ic_timelapse, "Rate", "7.1")).setViewHolder(new SocialViewHolder(getActivity()));
+        TreeNode twitter3 = new TreeNode(new SocialViewHolder.SocialItem(R.string.ic_communities, "Balance", "45")).setViewHolder(new SocialViewHolder(getActivity()));
+
+        TreeNode lake = new TreeNode(new PlaceHolderHolder.PlaceItem("A rose garden")).setViewHolder(new PlaceHolderHolder(getActivity()));
+        TreeNode mountains = new TreeNode(new PlaceHolderHolder.PlaceItem("The white house")).setViewHolder(new PlaceHolderHolder(getActivity()));
+
+        places.addChildren(lake, mountains);
+        socialNetworks.addChildren(facebook, google, twitter, linkedin);
+        profile.addChildren(facebook, facebook2, facebook3, facebook4, facebook5, linkedin, google, twitter, twitter1, twitter2, twitter3, places);
+    }
+
+    private void addMyProfileInfo(TreeNode profile, User u) {
+
+        TreeNode socialNetworks = new TreeNode(new IconTreeItemHolder.IconTreeItem(R.string.ic_people, "Social")).setViewHolder(new HeaderHolder(getActivity()));
+        TreeNode places = new TreeNode(new IconTreeItemHolder.IconTreeItem(R.string.ic_place, "Places")).setViewHolder(new HeaderHolder(getActivity()));
+
+        TreeNode facebook = new TreeNode(new SocialViewHolder.SocialItem(R.string.ic_account_box, "First name", u.getFname())).setViewHolder(new SocialViewHolder(getActivity()));
+        TreeNode facebook2 = new TreeNode(new SocialViewHolder.SocialItem(R.string.ic_account_box, "Two name", u.getLname())).setViewHolder(new SocialViewHolder(getActivity()));
+        TreeNode facebook3 = new TreeNode(new SocialViewHolder.SocialItem(R.string.ic_tag_faces, "Nick name", u.getNick())).setViewHolder(new SocialViewHolder(getActivity()));
+        TreeNode facebook4 = new TreeNode(new SocialViewHolder.SocialItem(R.string.ic_star_outline, "Status in App", "Administrator")).setViewHolder(new SocialViewHolder(getActivity()));
+        TreeNode facebook5 = new TreeNode(new SocialViewHolder.SocialItem(R.string.ic_extension, "Age", String.valueOf(u.getAge()))).setViewHolder(new SocialViewHolder(getActivity()));
+        TreeNode linkedin = new TreeNode(new SocialViewHolder.SocialItem(R.string.ic_earth, "Country", u.getCountry())).setViewHolder(new SocialViewHolder(getActivity()));
+        TreeNode google = new TreeNode(new SocialViewHolder.SocialItem(R.string.ic_gps_fixed, "City", u.getCity())).setViewHolder(new SocialViewHolder(getActivity()));
+        TreeNode twitter = new TreeNode(new SocialViewHolder.SocialItem(R.string.ic_people, "Count Friends", "81" /*TODO*/)).setViewHolder(new SocialViewHolder(getActivity()));
         TreeNode twitter1 = new TreeNode(new SocialViewHolder.SocialItem(R.string.ic_add_box, "Date Regist", "11.01.2017")).setViewHolder(new SocialViewHolder(getActivity()));
         TreeNode twitter2 = new TreeNode(new SocialViewHolder.SocialItem(R.string.ic_timelapse, "Rate", "7.1")).setViewHolder(new SocialViewHolder(getActivity()));
         TreeNode twitter3 = new TreeNode(new SocialViewHolder.SocialItem(R.string.ic_communities, "Balance", "45")).setViewHolder(new SocialViewHolder(getActivity()));
