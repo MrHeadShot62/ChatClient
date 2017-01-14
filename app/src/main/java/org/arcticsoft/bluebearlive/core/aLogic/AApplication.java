@@ -78,6 +78,6 @@ public abstract class AApplication {
 
     //public abstract void sendUserStatus();
 
-    public abstract boolean sendReportPacket(int userId, String message, int typeReport, int ReportOnUserId);
+    public abstract boolean sendReportPacket(int userId, String message, byte typeReport, int ReportOnUserId);
 
 }

@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.mrheadshot62.api.PermissionLevel;
 import com.mrheadshot62.api.types.AuthPacket;
+import com.mrheadshot62.api.types.ReportPacket;
 
 import org.arcticsoft.bluebearlive.core.aLogic.AApplication;
 import org.arcticsoft.bluebearlive.socket.ClientThread;
@@ -98,14 +99,9 @@ public class Application extends AApplication {
     @Override
     public boolean setServerConnection() {
         if(ConnectionController.start()){
-            clientThread = ConnectionController.getClientThread();
-            //Log.d(TAG, "CONNECTION_START | SERVER_IP -> "+ getServerIP());
-            return true;
-        }else {
-            Log.e(TAG, "CONNECTION_NOT_STARTED | CONNECT_IP_ADDRESS -> "+ getServerIP());
-            return false;
+            // TODO
         }
-
+        return true;
     }
 
     @Override
@@ -132,13 +128,7 @@ public class Application extends AApplication {
     @Override
     public boolean sendAuth() {
         PacketManager.PacketGenerator(userAplication, new AuthPacket(userAplication.getLoginUser(), "guest"));
-        if(clientThread.checkSendPacket){
-            Log.d(TAG, "AuthOK | CONNECT_IP_ADDRESS -> "+ getServerIP());
-            return false;
-        }else {
-            Log.e(TAG, "AuthFailed | CONNECT_IP_ADDRESS -> "+ getServerIP());
-            return true;
-        }
+        return true;
     }
 
     @Override
@@ -152,8 +142,8 @@ public class Application extends AApplication {
     }
 
     @Override
-    public boolean sendReportPacket(int userId, String message, int typeReport, int ReportOnUserId) {
-//        PacketManager.PacketGenerator(getUserApplication(), new ReportPacket(userId, message, typeReport, ReportOnUserId) );
+    public boolean sendReportPacket(int userId, String message, byte typeReport, int ReportOnUserId) {
+        PacketManager.PacketGenerator(getUserApplication(), new ReportPacket(userId, message, typeReport, ReportOnUserId) );
         return true;
     }
 

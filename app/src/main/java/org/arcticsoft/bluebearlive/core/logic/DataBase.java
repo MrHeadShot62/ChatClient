@@ -105,7 +105,7 @@ public class DataBase extends SQLiteOpenHelper {
         Cursor c = super.getReadableDatabase().query(USER_TABLE, null, null, null, null, null, null);
         if (c != null) {
             if (c.moveToFirst()) {
-                Log.d("DB", String.valueOf(c.getColumnIndex(COUNT_PHOTO)));
+                //Log.d("DB", String.valueOf(c.getColumnIndex(COUNT_PHOTO)));
                 user = new com.mrheadshot62.api.types.User(c.getString(c.getColumnIndex(LOGIN)),
                         c.getString(c.getColumnIndex(FNAME)),
                         c.getString(c.getColumnIndex(LNAME)),

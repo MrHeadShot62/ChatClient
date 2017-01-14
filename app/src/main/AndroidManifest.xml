@@ -12,14 +12,19 @@
         android:supportsRtl="true"
         tools:replace="android:icon"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".activity.MainActivity"/>
+        <activity android:name=".fragments.FeedLine.DetailActivity"/>
+        <activity android:name=".activity.SignInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".fragments.FeedLine.DetailActivity"/>
+
+        <activity android:name=".activity.StateSampleActivity">
+
+        </activity>
     </application>
 
 </manifest>

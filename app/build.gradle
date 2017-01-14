@@ -63,4 +63,6 @@ dependencies {
 
     compile 'nl.dionsegijn:pixelate:1.0.2'
     compile 'com.github.chrisbanes:PhotoView:1.3.1'
+
+    compile 'com.github.dmytrodanylyk.android-process-button:library:1.0.4'
 }
