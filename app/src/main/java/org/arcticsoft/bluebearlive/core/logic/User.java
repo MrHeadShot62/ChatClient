@@ -1,5 +1,6 @@
 package org.arcticsoft.bluebearlive.core.logic;
 
+import com.mrheadshot62.api.PermissionLevel;
 import com.mrheadshot62.api.types.AuthPacket;
 
 import org.arcticsoft.bluebearlive.core.aLogic.AUser;
@@ -42,6 +43,7 @@ public class User extends AUser {
 
     public static User guestUser(String loginUser, String nameUser, String countryUser){
         instance = new User(loginUser, nameUser, countryUser, "guest" , PermissionLevel.GUEST);
+
         return getInstance();
     }
 
@@ -64,20 +66,12 @@ public class User extends AUser {
 
     @Override
     public boolean isLogin() {
-        if(this.isLogin){
-            return true;
-        }else {
-            return false;
-        }
+        return isLogin;
     }
 
     @Override
     public boolean isBanned() {
-        if(this.isBanned){
-            return true;
-        }else {
-            return false;
-        }
+        return isBanned;
     }
 
     public String getLoginUser() {

@@ -164,5 +164,15 @@ public class Application extends AApplication {
     public void setContext(Context context) {
         this.context = context;
         initDataBase(context);
+        try {
+            com.mrheadshot62.api.types.User u = DataBase.getInstance().getUser();
+            if (u!=null){
+                Log.d("DB", "loaded "+u.getLogin());
+            }else{
+                Log.d("DB", "empty data base");
+            }
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
     }
 }
