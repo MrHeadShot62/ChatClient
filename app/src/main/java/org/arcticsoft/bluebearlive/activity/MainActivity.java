@@ -173,6 +173,8 @@ public class MainActivity extends AppCompatActivity {
         }, 500);
     }
 
-
-
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
 }

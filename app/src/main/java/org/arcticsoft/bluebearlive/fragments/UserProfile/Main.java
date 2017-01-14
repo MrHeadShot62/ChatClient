@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import org.arcticsoft.bluebearlive.core.UserProfile.fragment.SocialViewHolder;
 /**
  * Created by florentchampigny on 24/04/15.
  */
+
 public class Main extends Fragment {
 
     View view;
@@ -38,6 +40,7 @@ public class Main extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.user_profile_main, container, false);
+        Log.d("P_MAIN", "Load");
 
         ViewGroup viewGroup = (ViewGroup) view.findViewById(R.id.rootInfo);
 
@@ -71,7 +74,9 @@ public class Main extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mScrollView = (ObservableScrollView) view.findViewById(R.id.scrollView);
+
+        Log.d("U_MAIN", "ON_VIEW");
+        mScrollView = (ObservableScrollView) view.findViewById(R.id.profile_scroll_view);
 
         MaterialViewPagerHelper.registerScrollView(getActivity(), mScrollView, null);
     }
@@ -132,5 +137,10 @@ public class Main extends Fragment {
         places.addChildren(lake, mountains);
         socialNetworks.addChildren(facebook, google, twitter, linkedin);
         profile.addChildren(socialNetworks, places);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 }

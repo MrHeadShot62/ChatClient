@@ -4,4 +4,9 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="item_height">80dp</dimen>
     <dimen name="item_padding">16dp</dimen>
+    <dimen name="image_size1">250dp</dimen>
+    <dimen name="image_size2">250dp</dimen>
+    <dimen name="divider_height">@dimen/gap</dimen>
+    <dimen name="gap">3dp</dimen>
+    <color name="frame">@android:color/black</color>
 </resources>

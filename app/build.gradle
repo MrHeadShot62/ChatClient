@@ -56,4 +56,11 @@ dependencies {
 
     compile 'com.github.bmelnychuk:atv:1.2.0'
     compile 'com.github.johnkil.print:print:1.2.2'
+    compile 'com.jpardogo.listbuddies:library:1.1.1'
+    compile 'com.jakewharton:butterknife:8.4.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+
+    compile 'nl.dionsegijn:pixelate:1.0.2'
+    compile 'com.github.chrisbanes:PhotoView:1.3.1'
 }

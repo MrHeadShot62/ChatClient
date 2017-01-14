@@ -4,9 +4,6 @@ package org.arcticsoft.bluebearlive.fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,27 +14,20 @@ import com.github.florent37.materialviewpager.header.HeaderDesign;
 
 import org.arcticsoft.bluebearlive.R;
 import org.arcticsoft.bluebearlive.core.UserProfile.fragment.RecyclerViewFragment;
-import org.arcticsoft.bluebearlive.core.UserProfile.fragment.ScrollFragment;
-import org.arcticsoft.bluebearlive.core.UserProfile.fragment.WebViewFragment;
 import org.arcticsoft.bluebearlive.fragments.UserProfile.Main;
 import org.arcticsoft.bluebearlive.fragments.UserProfile.Settings;
-import org.arcticsoft.bluebearlive.fragments.UserProfile.Statistic;
 
 public class UserProfileFragment extends Fragment {
 
     private MaterialViewPager mViewPager;
     View view;
 
-    public UserProfileFragment() {
-        // Required empty public constructor
-    }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.main_profile, null);
 
-        mViewPager = (MaterialViewPager) view.findViewById(R.id.materialViewPager);
+        mViewPager = (MaterialViewPager) view.findViewById(R.id.profile_material_view_pager);
 
         mViewPager.getViewPager().setAdapter(new FragmentStatePagerAdapter(getActivity().getSupportFragmentManager()) {
 
@@ -47,27 +37,24 @@ public class UserProfileFragment extends Fragment {
                     case 0:
                         return Main.newInstance();
                     case 1:
-                        return Statistic.newInstance();
-                    case 2:
                         return Settings.newInstance();
                     default:
                         return RecyclerViewFragment.newInstance();
-
                 }
             }
 
             @Override
             public int getCount() {
-                return 3;
+                return 2;
             }
 
             @Override
             public CharSequence getPageTitle(int position) {
                 switch (position) {
                     case 0:
-                        return "Selection";
+                        return "User info";
                     case 1:
-                        return "Actualités";
+                        return "User photo";
                     case 2:
                         return "Professionnel";
                 }
@@ -100,9 +87,7 @@ public class UserProfileFragment extends Fragment {
         mViewPager.getPagerTitleStrip().setViewPager(mViewPager.getViewPager());
 
         View logo = view.findViewById(R.id.logo_white);
-        Log.d("MUP", "check1");
         if (logo != null) {
-            Log.d("MUP", "check2");
             logo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -115,4 +100,8 @@ public class UserProfileFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
 }

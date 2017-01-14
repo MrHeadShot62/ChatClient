@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,7 +55,9 @@ public class Statistic extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mScrollView = (ObservableScrollView) view.findViewById(R.id.scrollView);
+
+        Log.d("U_STAT", "ON_VIEW");
+        mScrollView = (ObservableScrollView) view.findViewById(R.id.profile_statistic_scroll_view);
 
         MaterialViewPagerHelper.registerScrollView(getActivity(), mScrollView, null);
     }

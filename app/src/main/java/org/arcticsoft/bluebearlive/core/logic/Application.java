@@ -15,7 +15,7 @@ import org.arcticsoft.bluebearlive.socket.ConnectionController;
 public class Application extends AApplication {
 
     private static final String TAG = "APPLICATION";
-    private static final String SERVERIP = "192.168.0.102";
+    private static final String SERVERIP = "194.117.253.208";
 
     private User userAplication;
     private ClientThread clientThread;
