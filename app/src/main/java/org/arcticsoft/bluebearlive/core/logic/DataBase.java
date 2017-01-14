@@ -78,7 +78,7 @@ public class DataBase extends SQLiteOpenHelper {
     }
 
     public void setUser(com.mrheadshot62.api.types.User u){
-        getWritableDatabase().execSQL(String.format("DELETE FROM %s", USER_TABLE));
+        deleteUser();
         ContentValues cv = new ContentValues();
         cv.put(LOGIN, u.getLogin());
         cv.put(FNAME, u.getFname());
@@ -128,6 +128,10 @@ public class DataBase extends SQLiteOpenHelper {
             Log.d("DB", "Cursor is null");
         }
         return user;
+    }
+
+    public void deleteUser(){
+        getWritableDatabase().execSQL(String.format("DELETE FROM %s", USER_TABLE));
     }
 
     @Override
