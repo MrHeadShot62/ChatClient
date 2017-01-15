@@ -7,6 +7,7 @@ import com.vk.sdk.VKScope;
 import com.vk.sdk.VKSdk;
 import com.vk.sdk.api.VKError;
 import com.vk.sdk.api.model.VKScopes;
+import com.vk.sdk.util.VKUtil;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -103,8 +104,8 @@ public class SignInActivity extends AppCompatActivity {
             }
         });
 
-//        String[] fingerprint = VKUtil.getCertificateFingerprint(this, this.getPackageName());
-//        Log.d("Fingerprint", fingerprint[0]);
+        String[] fingerprint = VKUtil.getCertificateFingerprint(this, this.getPackageName());
+        Log.d("Fingerprint", fingerprint[0]);
     }
 
     private void showLogout() {
