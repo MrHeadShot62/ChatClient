@@ -1,14 +1,17 @@
 package org.arcticsoft.bluebearlive.core.logic;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 
 import com.mrheadshot62.api.MultiPacket;
 import com.mrheadshot62.api.PermissionLevel;
 import com.mrheadshot62.api.types.AuthPacket;
 import com.mrheadshot62.api.types.ReportPacket;
+import com.mrheadshot62.api.types.answer.ServerAnswerAuthUserPacket;
 
 import org.arcticsoft.bluebearlive.core.aLogic.AApplication;
 import org.arcticsoft.bluebearlive.socket.ConnectionController;
@@ -19,10 +22,11 @@ import java.util.concurrent.ExecutionException;
  * Created by DmitriyRoot on 06.01.2017.
  */
 
-public class Application extends AApplication {
+public class Application{
 
     private static final String TAG = "APPLICATION";
-    private static final String SERVERIP = "192.168.0.102";
+    private static final String SERVERIP = "194.117.253.208";
+    private static Activity activity;
 
     private User userAplication;
     private Context context;
@@ -35,6 +39,14 @@ public class Application extends AApplication {
         }else {
             return instance;
         }
+    }
+
+    public static Activity getActivity() {
+        return activity;
+    }
+
+    public static void setActivity(Activity activity) {
+        Application.activity = activity;
     }
 
     public void initDataBase(Context context){
@@ -50,11 +62,11 @@ public class Application extends AApplication {
         Log.d(TAG, "CreateNewGuestUser");
     }
 
-    public void authUser(){
+    public void authUser(ServerAnswerAuthUserPacket serverAnswerAuthUserPacket){
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
-                User.authUser("guest", "guest", null, "guest" , getUserPermission());
+                User.authUser(serverAnswerAuthUserPacket);
                 Log.d(TAG, "LoadReadyUser");
             }
         });
@@ -69,78 +81,64 @@ public class Application extends AApplication {
         }
     }
 
-    @Override
     public boolean setUserApplication() {
-        if(User.getInstance() == null){
-            userAplication = User.guestUser("guest", "TestName", "TestCountry");
-            Log.d(TAG, "CreateNewGuestUser");
-            return true;
-        }else {
-            if (User.getInstance().getPermissionLevel() < PermissionLevel.GUEST){
-                userAplication = User.getInstance();
-                return true;
-            }else {
-                Thread t = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        User.authUser("guest", "guest", null, "guest" , PermissionLevel.GUEST);
-                        Log.d(TAG, "LoadReadyUser");
-                    }
-                });
-                t.start();
-                return false;
-            }
-        }
+        setGuest();
+        return true;
     }
 
-    @Override
+    public boolean setUserApplication(ServerAnswerAuthUserPacket serverAnswerAuthUserPacket) {
+        User.authUser(serverAnswerAuthUserPacket);
+        return true;
+    }
+
+    public boolean setUserApplication(boolean b) {
+        User.authUser();
+        return true;
+    }
+
+
     public void setServerIP() {
 
     }
 
-    @Override
     public boolean setServerConnection() {
-        return ConnectionController.start(getServerIP());
+        if (!ConnectionController.isConnected){
+            return ConnectionController.start(getServerIP());
+        }
+        Toast.makeText(getContext(), "IS CONNECTED!", Toast.LENGTH_SHORT).show();
+        return false;
     }
 
-    @Override
     public String getServerIP() {
         Log.d(TAG, "IP READY");
         return SERVERIP;
     }
 
-    @Override
     public User getUserApplication() {
         return userAplication;
     }
 
-    @Override
     public int getUserPermission() {
         return userAplication.getPermissionLevel();
     }
 
-    @Override
     public Session getSession() {
         return userAplication.getSession();
     }
 
-    @Override
-    public boolean sendAuth() {
-        PacketManager.PacketGenerator(userAplication, new AuthPacket(userAplication.getLoginUser(), "guest"));
+    public boolean sendAuth(String login, String pass) {
+        PacketManager.PacketGenerator(userAplication, new AuthPacket(login, pass));
         return true;
     }
 
-    @Override
     public boolean checkServerConnection() {
         return false;
     }
 
-    @Override
     public boolean reconnectServer() {
         return false;
     }
 
-    @Override
     public boolean sendReportPacket(int userId, String message, byte typeReport, int ReportOnUserId) {
         PacketManager.PacketGenerator(getUserApplication(), new ReportPacket(userId, message, typeReport, ReportOnUserId) );
         return true;
@@ -181,6 +179,10 @@ public class Application extends AApplication {
 
         @Override
         protected Boolean doInBackground(MultiPacket... multiPackets) {
+            if(!ConnectionController.isConnected){
+                Log.d("RECONNECT", "Reconnect to server "+ Application.SERVERIP);
+                Application.getInstance().setServerConnection();
+            }
             do {
                 Log.w(TAG, "Attempt sending packet on Server. Remaining - "+countReconnect);
                 if (ConnectionController.isStarted){

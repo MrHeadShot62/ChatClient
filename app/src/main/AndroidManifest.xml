@@ -24,9 +24,6 @@
 
         </activity>
 
-        <activity android:name=".activity.StateSampleActivity">
-
-        </activity>
     </application>
 
 </manifest>

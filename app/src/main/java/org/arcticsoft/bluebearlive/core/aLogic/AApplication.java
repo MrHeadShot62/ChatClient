@@ -58,7 +58,7 @@ public abstract class AApplication {
 
     //public abstract void sendLogOut();
 
-    public abstract boolean sendAuth();
+    public abstract boolean sendAuth(String login, String pass);
 
     public abstract boolean checkServerConnection();
 

@@ -1,5 +1,7 @@
 package org.arcticsoft.bluebearlive.core.handler.abstracts;
 
+import android.support.v7.app.AppCompatActivity;
+
 import com.mrheadshot62.api.Packet;
 import com.mrheadshot62.api.types.answer.ServerAnswerAuthUserPacket;
 

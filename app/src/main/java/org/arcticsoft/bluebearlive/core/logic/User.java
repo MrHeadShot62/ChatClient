@@ -2,6 +2,7 @@ package org.arcticsoft.bluebearlive.core.logic;
 
 import com.mrheadshot62.api.PermissionLevel;
 import com.mrheadshot62.api.types.AuthPacket;
+import com.mrheadshot62.api.types.answer.ServerAnswerAuthUserPacket;
 
 import org.arcticsoft.bluebearlive.core.aLogic.AUser;
 
@@ -25,20 +26,44 @@ public class User extends AUser {
 
     private static User instance = null;
 
-    public static User authUser(String loginUser, String nameUser, String countryUser, String sessionKey, int permissionLevel) {
-        if(!instance.isAuth){
+    public static User authUser(ServerAnswerAuthUserPacket serverAnswerAuthUserPacket) {
+        try {
             PacketManager.PacketGenerator(instance, new AuthPacket("guest", "guest"));
-            instance.loginUser = loginUser;
-            instance.nameUser = nameUser;
-            instance.countryUser = countryUser;
-            instance.session = new Session(sessionKey);
-            instance.permissionLevel = permissionLevel;
+            com.mrheadshot62.api.types.User user = serverAnswerAuthUserPacket.getUser();
+            instance.loginUser = user.getLogin();
+            instance.nameUser = user.getFname();
+            instance.countryUser = user.getCountry();
+            instance.session = new Session(serverAnswerAuthUserPacket.getSession());
+            instance.permissionLevel = 10;
             instance.isAuth = true;
-            return getInstance();
-        }else {
-            instance = new User(loginUser, nameUser, countryUser, sessionKey , permissionLevel);
-            return getInstance();
+            instance.id = user.getId();
+            DataBase.getInstance().setUser(user);
+        } catch (Exception e){
+            guestUser("guest", "TestName", "TestCountry");
+            e.printStackTrace();
         }
+
+        return getInstance();
+    }
+
+    public static User authUser() {
+//        try {
+//            PacketManager.PacketGenerator(instance, new AuthPacket("guest", "guest"));
+//            com.mrheadshot62.api.types.User user = serverAnswerAuthUserPacket.getUser();
+//            instance.loginUser = user.getLogin();
+//            instance.nameUser = user.getFname();
+//            instance.countryUser = user.getCountry();
+//            instance.session = new Session(serverAnswerAuthUserPacket.getSession());
+//            instance.permissionLevel = 10;
+//            instance.isAuth = true;
+//            instance.id = user.getId();
+//            DataBase.getInstance().setUser(user);
+//        } catch (Exception e){
+//            guestUser("guest", "TestName", "TestCountry");
+//            e.printStackTrace();
+//        }
+
+        return getInstance();
     }
 
     public static User guestUser(String loginUser, String nameUser, String countryUser){

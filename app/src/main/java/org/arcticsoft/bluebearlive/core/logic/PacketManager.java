@@ -70,8 +70,7 @@ public class PacketManager{
         return new PermissionPacket(user.getSessionKey(), user.getPermissionLevel(), user.getId());
     }
 
-    private static int sendPackets(MultiPacket multiPacket) {
-        Application.getInstance().sendPacket(multiPacket);
-        return 0;
+    private static boolean sendPackets(MultiPacket multiPacket) {
+        return Application.getInstance().sendPacket(multiPacket);
     }
 }

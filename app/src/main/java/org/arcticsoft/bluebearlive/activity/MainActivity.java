@@ -1,5 +1,6 @@
 package org.arcticsoft.bluebearlive.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,8 +9,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.FrameLayout;
+import android.widget.Toast;
+
+import com.mrheadshot62.api.types.User;
 
 import org.arcticsoft.bluebearlive.R;
+import org.arcticsoft.bluebearlive.core.logic.Application;
+import org.arcticsoft.bluebearlive.core.logic.DataBase;
 import org.arcticsoft.bluebearlive.fragments.FeedlineFragment;
 import org.arcticsoft.bluebearlive.fragments.NoticeFragment;
 import org.arcticsoft.bluebearlive.fragments.RandomUserFragment;
@@ -25,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
     NavigationTabBar navigationTabBar;
     FrameLayout fragment;
 
+    User userFromDB;
+    org.arcticsoft.bluebearlive.core.logic.User appUser;
+
     int active = -1;
 
     private ArrayMap<Integer, Fragment> fragments;
@@ -33,6 +42,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_horizontal_ntb);
+
+        Application.getInstance().setContext(getApplicationContext());
+        Application.setActivity(this);
+        try {
+            userFromDB = DataBase.getInstance().getUser();
+            if(userFromDB == null){
+                Application.getInstance().setUserApplication();
+                startActivity(new Intent(this, SignInActivity.class));
+            }
+            else {
+                
+                Toast.makeText(this, "Load User from DB", Toast.LENGTH_LONG).show();
+            }
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
+
         navigationTabBar = (NavigationTabBar) findViewById(R.id.ntb);
         fragment = (FrameLayout) findViewById(R.id.ufragment);
 
