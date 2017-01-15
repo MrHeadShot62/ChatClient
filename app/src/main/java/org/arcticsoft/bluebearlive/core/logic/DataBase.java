@@ -1,5 +1,6 @@
 package org.arcticsoft.bluebearlive.core.logic;
 
+import android.accounts.AccountManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -8,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Debug;
 import android.util.Log;
 
+import java.sql.Timestamp;
 import java.util.Map;
 
 
@@ -18,50 +20,51 @@ import java.util.Map;
 public class DataBase extends SQLiteOpenHelper {
 
     private static final int DB_VERSION = 1;
-    private static final String DB_NAME = "test2.db";
+    private static final String DB_NAME = "test3.db";
 
-    public static final String USER_TABLE = "users";
-    public static final String USER_ID = "user_id";
-    public static final String LOGIN = "login";
-    public static final String PASS = "pass";
-    public static final String FNAME = "fname";
-    public static final String LNAME = "lname";
-    public static final String NICK = "nick";
-    public static final String AGE = "age";
-    public static final String COUNTRY = "country";
-    public static final String CITY = "city";
-    public static final String MYPHOTOS = "myphotos";
-    public static final String PROFILEPHOTO = "profile_photo";
-    public static final String LASTONLINE = "last_online";
-    public static final String EMAIL = "email";
-    public static final String COUNT_PHOTO = "count_photo";
-    public static final String FRIENDS = "friends";
-    public static final String SESSION = "session";
-    public static final String IP = "ip";   //TODO сделать эти долбаные константы!!!
-    private static final String CREATE_USER_TABLE = "CREATE TABLE ["+USER_TABLE+"] (\n" +
-            "  "+FNAME+" TEXT, \n" +
-            "  "+LNAME+" TEXT, \n" +
-            "  "+LOGIN+" TEXT, \n" +
-            "  "+NICK+" TEXT, \n" +
-            "  "+COUNTRY+" TEXT, \n" +
-            "  "+CITY+" VARCHAR, \n" +
-            "  "+MYPHOTOS+" TEXT, \n" +
-            "  "+PROFILEPHOTO+" TEXT, \n" +
-            "  "+IP+" VARCHAR, \n" +
-            "  "+LASTONLINE+" TIMESTAMP, \n" +
-            "  "+FRIENDS+" VARCHAR, \n" +
-            "  "+EMAIL+" VARCHAR, \n" +
-            "  "+SESSION+" VARCHAR, \n" +
-            "  "+PASS+" VARCHAR, \n" +
-            "  "+AGE+" INT, \n" +
-            "  "+USER_ID+" INT, \n" +
-            "  "+COUNT_PHOTO+" INT, \n" +
-            "  version DOUBLE, \n" +
-            "  balance INT, \n" +
-            "  dialog_photo VARCHAR, \n" +
-            "  registration_data TIMESTAMP);\n" +
-            "\n";
-
+    public static final String USER = "users";
+    public static final String USER_LOGIN = "login";
+    public static final String USER_FNAME = "fname";
+    public static final String USER_LNAME = "lname";
+    public static final String USER_NICK = "nick_name";
+    public static final String USER_AGE = "age";
+    public static final String USER_COUNTRY = "country";
+    public static final String USER_CITY = "city";
+    public static final String USER_RATING = "rating";
+    public static final String USER_PROFILE_PHOTO = "profile_photo";
+    public static final String USER_LAST_ONLINE = "last_online";
+    public static final String USER_EMAIL = "email";
+    public static final String USER_FRIENDS = "friends";
+    public static final String USER_PERMISSIONLVL = "permissionLevel";
+    public static final String USER_COUNT_PHOTO = "count_photo";
+    public static final String USER_BALANCE = "balance";
+    public static final String USER_ONLINE = "online";
+    public static final String USER_ID = "id";
+    public static final String USER_REGISTRATION = "registration";
+    public static final String USER_LAST_AUTH = "last_auth";
+    public static final String USER_PHOTOS = "photos";
+    public static final String USER_IS_UPDATED = "is_updated";
+    private static final String CREATE_USER_TABLE = "CREATE TABLE ["+USER+"] (\n" +
+            "  "+USER_LOGIN+" VARCHAR, \n" +
+            "  "+USER_FNAME+" VARCHAR, \n" +
+            "  "+USER_LNAME+" VARCHAR, \n" +
+            "  "+USER_NICK+" VARCHAR, \n" +
+            "  "+USER_AGE+" INTEGER, \n" +
+            "  "+USER_ID+" INTEGER, \n" +
+            "  "+USER_COUNTRY+" INTEGER, \n" +
+            "  "+USER_CITY+" INTEGER, \n" +
+            "  "+USER_RATING+" INTEGER, \n" +
+            "  "+USER_PROFILE_PHOTO+" VARCHAR, \n" +
+            "  "+USER_LAST_ONLINE+" TIMESTAMP, \n" +
+            "  "+USER_EMAIL+" VARCHAR, \n" +
+            "  "+USER_FRIENDS+" TEXT, \n" +
+            "  "+USER_PERMISSIONLVL+" INTEGER, \n" +
+            "  "+USER_COUNT_PHOTO+" INTEGER, \n" +
+            "  "+USER_BALANCE+" INTEGER, \n" +
+            "  "+USER_ONLINE+" INTEGER, \n" +
+            "  "+USER_IS_UPDATED+" INTEGER, \n" +
+            "  "+USER_REGISTRATION+" TIMESTAMP,\n" +
+            "  "+USER_LAST_AUTH+" TIMESTAMP);";
     private static DataBase instance;
 
     public DataBase(Context context) {
@@ -80,21 +83,23 @@ public class DataBase extends SQLiteOpenHelper {
     public void setUser(com.mrheadshot62.api.types.User u){
         deleteUser();
         ContentValues cv = new ContentValues();
-        cv.put(LOGIN, u.getLogin());
-        cv.put(FNAME, u.getFname());
-        cv.put(LNAME, u.getLname());
-        cv.put(NICK, u.getNick());
-        cv.put(AGE, u.getAge());
-        cv.put(COUNTRY, u.getCountry());
-        cv.put(CITY, u.getCity());
-//        cv.put(MYPHOTOS, u.getP());//TODO
-        cv.put(PROFILEPHOTO, u.getProfilePhoto());
-        cv.put(LASTONLINE, u.getLastOnline());
-        cv.put(EMAIL, u.getEmail());
-        cv.put(FRIENDS, u.getFriends());
-        cv.put(AGE, u.getAge());
+        cv.put(USER_LOGIN, u.getLogin());
+        cv.put(USER_FNAME, u.getFname());
+        cv.put(USER_LNAME, u.getLname());
+        cv.put(USER_NICK, u.getNickname());
+        cv.put(USER_AGE, u.getAge());
+        cv.put(USER_COUNTRY, u.getContry());
+        cv.put(USER_CITY, u.getCity());
+        cv.put(USER_RATING, u.getRating());
+        cv.put(USER_PROFILE_PHOTO, u.getProfilePhotos());
+        //cv.put(USER_LAST_ONLINE, );
+        cv.put(USER_EMAIL, u.getEmail());
+        cv.put(USER_FRIENDS, u.getFriends());
+        cv.put(USER_PERMISSIONLVL, u.getPermissionLvl());
+        cv.put(USER_FRIENDS, u.getFriends());
+        cv.put(USER_FRIENDS, u.getFriends());
         cv.put(USER_ID, u.getId());
-        getWritableDatabase().insert(USER_TABLE, null, cv);
+        getWritableDatabase().insert(USER, null, cv);
         for (Map.Entry<String, Object> c:cv.valueSet()) {
             Log.d("DB", c.getKey()+": "+c.getValue());
         }
@@ -102,26 +107,32 @@ public class DataBase extends SQLiteOpenHelper {
 
     public com.mrheadshot62.api.types.User getUser() {
         com.mrheadshot62.api.types.User user=null;
-        Cursor c = super.getReadableDatabase().query(USER_TABLE, null, null, null, null, null, null);
+        Cursor c = super.getReadableDatabase().query(USER, null, null, null, null, null, null);
         if (c != null) {
             if (c.moveToFirst()) {
-                //Log.d("DB", String.valueOf(c.getColumnIndex(COUNT_PHOTO)));
-                user = new com.mrheadshot62.api.types.User(c.getString(c.getColumnIndex(LOGIN)),
-                        c.getString(c.getColumnIndex(FNAME)),
-                        c.getString(c.getColumnIndex(LNAME)),
-                        c.getString(c.getColumnIndex(NICK)),
-                        c.getString(c.getColumnIndex(COUNTRY)),
-                        c.getString(c.getColumnIndex(CITY)),
-                        c.getInt(c.getColumnIndex(COUNT_PHOTO)),
-                        c.getString(c.getColumnIndex(PROFILEPHOTO)),
-                        c.getString(c.getColumnIndex(LASTONLINE)),
-                        c.getString(c.getColumnIndex(EMAIL)),
-                        c.getString(c.getColumnIndex(FRIENDS)),
-                        c.getString(c.getColumnIndex(SESSION)),
-                        c.getInt(c.getColumnIndex(AGE)),
-                        c.getInt(c.getColumnIndex(USER_ID)),
-                        c.getInt(c.getColumnIndex(USER_ID)),
-                        c.getInt(c.getColumnIndex(USER_ID)));
+                Log.d("DB", String.valueOf(c.getColumnIndex(USER_COUNT_PHOTO)));
+                user = new com.mrheadshot62.api.types.User(c.getInt(c.getColumnIndex("id")),
+                        c.getString(c.getColumnIndex(USER_LOGIN)),
+                        c.getString(c.getColumnIndex(USER_FNAME)),
+                        c.getString(c.getColumnIndex(USER_LNAME)),
+                        c.getString(c.getColumnIndex(USER_FRIENDS)),
+                        c.getString(c.getColumnIndex(USER_NICK)),
+                        c.getString(c.getColumnIndex(USER_PHOTOS)),
+                        c.getString(c.getColumnIndex(USER_PROFILE_PHOTO)),
+                        c.getString(c.getColumnIndex(USER_EMAIL)),
+                        c.getInt(c.getColumnIndex(USER_PERMISSIONLVL)),
+                        c.getInt(c.getColumnIndex(USER_AGE)),
+                        c.getInt(c.getColumnIndex(USER_COUNTRY)),
+                        c.getInt(c.getColumnIndex(USER_CITY)),
+                        c.getInt(c.getColumnIndex(USER_RATING)),
+                        c.getInt(c.getColumnIndex(USER_IS_UPDATED)),
+                        c.getInt(c.getColumnIndex(USER_COUNT_PHOTO)),
+                        c.getInt(c.getColumnIndex(USER_BALANCE)),
+                        (byte)c.getInt(c.getColumnIndex(USER_ONLINE)),
+                        Timestamp.valueOf(c.getString(c.getColumnIndex(USER_LAST_ONLINE))),
+                        Timestamp.valueOf(c.getString(c.getColumnIndex(USER_REGISTRATION))),
+                        Timestamp.valueOf(c.getString(c.getColumnIndex(USER_LAST_AUTH)))
+                        );
             }
             c.close();
         } else {
@@ -131,7 +142,7 @@ public class DataBase extends SQLiteOpenHelper {
     }
 
     public void deleteUser(){
-        getWritableDatabase().execSQL(String.format("DELETE FROM %s", USER_TABLE));
+        getWritableDatabase().execSQL(String.format("DELETE FROM %s", USER));
     }
 
     @Override

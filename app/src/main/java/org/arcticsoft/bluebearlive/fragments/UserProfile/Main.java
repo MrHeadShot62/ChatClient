@@ -125,11 +125,11 @@ public class Main extends Fragment {
 
         TreeNode facebook = new TreeNode(new SocialViewHolder.SocialItem(R.string.ic_account_box, "First name", u.getFname())).setViewHolder(new SocialViewHolder(getActivity()));
         TreeNode facebook2 = new TreeNode(new SocialViewHolder.SocialItem(R.string.ic_account_box, "Two name", u.getLname())).setViewHolder(new SocialViewHolder(getActivity()));
-        TreeNode facebook3 = new TreeNode(new SocialViewHolder.SocialItem(R.string.ic_tag_faces, "Nick name", u.getNick())).setViewHolder(new SocialViewHolder(getActivity()));
+        TreeNode facebook3 = new TreeNode(new SocialViewHolder.SocialItem(R.string.ic_tag_faces, "Nick name", u.getNickname())).setViewHolder(new SocialViewHolder(getActivity()));
         TreeNode facebook4 = new TreeNode(new SocialViewHolder.SocialItem(R.string.ic_star_outline, "Status in App", "Administrator")).setViewHolder(new SocialViewHolder(getActivity()));
         TreeNode facebook5 = new TreeNode(new SocialViewHolder.SocialItem(R.string.ic_extension, "Age", String.valueOf(u.getAge()))).setViewHolder(new SocialViewHolder(getActivity()));
-        TreeNode linkedin = new TreeNode(new SocialViewHolder.SocialItem(R.string.ic_earth, "Country", u.getCountry())).setViewHolder(new SocialViewHolder(getActivity()));
-        TreeNode google = new TreeNode(new SocialViewHolder.SocialItem(R.string.ic_gps_fixed, "City", u.getCity())).setViewHolder(new SocialViewHolder(getActivity()));
+        TreeNode linkedin = new TreeNode(new SocialViewHolder.SocialItem(R.string.ic_earth, "Country", String.valueOf(u.getCounPhoto()))).setViewHolder(new SocialViewHolder(getActivity()));
+        TreeNode google = new TreeNode(new SocialViewHolder.SocialItem(R.string.ic_gps_fixed, "City", String.valueOf(u.getCity()))).setViewHolder(new SocialViewHolder(getActivity()));
         TreeNode twitter = new TreeNode(new SocialViewHolder.SocialItem(R.string.ic_people, "Count Friends", "81" /*TODO*/)).setViewHolder(new SocialViewHolder(getActivity()));
         TreeNode twitter1 = new TreeNode(new SocialViewHolder.SocialItem(R.string.ic_add_box, "Date Regist", "11.01.2017")).setViewHolder(new SocialViewHolder(getActivity()));
         TreeNode twitter2 = new TreeNode(new SocialViewHolder.SocialItem(R.string.ic_timelapse, "Rate", "7.1")).setViewHolder(new SocialViewHolder(getActivity()));
