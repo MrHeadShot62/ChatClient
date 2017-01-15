@@ -49,22 +49,6 @@ public class MainActivity extends AppCompatActivity {
             Log.d("KEYSS", s);
         }
 
-        Application.getInstance().setContext(getApplicationContext());
-        Application.setActivity(this);
-        try {
-            userFromDB = DataBase.getInstance().getUser();
-            if(userFromDB == null){
-                Application.getInstance().setUserApplication();
-                startActivity(new Intent(this, SignInActivity.class));
-            }
-            else {
-                
-                Toast.makeText(this, "Load User from DB", Toast.LENGTH_LONG).show();
-            }
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        }
-
         navigationTabBar = (NavigationTabBar) findViewById(R.id.ntb);
         fragment = (FrameLayout) findViewById(R.id.ufragment);
 
@@ -203,6 +187,23 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }, 500);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        try {
+            userFromDB = DataBase.getInstance().getUser();
+            if(userFromDB == null){
+                startActivity(new Intent(this, SignInActivity.class));
+            }
+            else {
+
+                Toast.makeText(this, "Load User from DB", Toast.LENGTH_LONG).show();
+            }
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

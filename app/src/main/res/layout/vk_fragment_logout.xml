@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    tools:context="activity.LoginVkActivity">
+    tools:context=".activity.LoginActivity">
 
     <Button
         android:id="@+id/continue_button"

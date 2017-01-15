@@ -1,130 +1,209 @@
 package org.arcticsoft.bluebearlive.core.logic;
 
-import com.mrheadshot62.api.PermissionLevel;
-import com.mrheadshot62.api.types.AuthPacket;
 import com.mrheadshot62.api.types.answer.ServerAnswerAuthUserPacket;
 
-import org.arcticsoft.bluebearlive.core.aLogic.AUser;
+import java.sql.Timestamp;
 
 /**
  * Created by DmitriyRoot on 04.01.2017.
  */
 
-public class User extends AUser {
+public class User{
 
-    private String loginUser;
-    private String nameUser;
-    private String countryUser;
-    private Session session;
-    private int permissionLevel;
+    private static final String TAG = "USER_APPLICATION";
+
+    private String fname;
+    private String lname;
+    private String friends;
+    private String login;
+    private String nickname;
+    private String photos;
+    private String profilePhotos;
+    private String email;
+    private int id;
+    private int permissionLvl;
+    private int age;
+    private int contry;
+    private int city;
+    private int rating;
+    private int isUpdated;
+    private int counPhoto;
+    private int balance;
+    private byte online;
+    private Timestamp lastoOnline;
+    private Timestamp registration;
+    private Timestamp lastAuth;
+
+    private String session;
+
     public boolean isAuth=false;
-    private int id = 0;
-    public static final Object sync = new Object();
 
     private boolean isLogin = false;
     private boolean isBanned  = false;
 
-    private static User instance = null;
+    private static User instance;
 
-    public static User authUser(ServerAnswerAuthUserPacket serverAnswerAuthUserPacket) {
-        try {
-            PacketManager.PacketGenerator(instance, new AuthPacket("guest", "guest"));
-            com.mrheadshot62.api.types.User user = serverAnswerAuthUserPacket.getUser();
-            instance.loginUser = user.getLogin();
-            instance.nameUser = user.getFname();
-            //instance.countryUser = user.getCountry();
-            instance.session = new Session(serverAnswerAuthUserPacket.getSession());
-            instance.permissionLevel = 10;
-            instance.isAuth = true;
-            instance.id = user.getId();
-            DataBase.getInstance().setUser(user);
-        } catch (Exception e){
-            guestUser("guest", "TestName", "TestCountry");
-            e.printStackTrace();
-        }
+    private User(){}
 
-        return getInstance();
+    public static User initGuestUser(){
+        instance.fname = "N/A";
+        instance.lname = "N/A";
+        instance.friends = "N/A";
+        instance.login = "N/A";
+        instance.nickname = "N/A";
+        instance.photos = "N/A";
+        instance.profilePhotos = "N/A";
+        instance.email = "N/A";
+        instance.id = 0;
+        instance.permissionLvl = 0;
+        instance.age = 0;
+        instance.contry = 0;
+        instance.city = 0;
+        instance.rating = 0;
+        instance.isUpdated = 0;
+        instance.counPhoto = 0;
+        instance.balance = 0;
+        instance.online = 0;
+        instance.lastoOnline = new Timestamp(0);
+        instance.registration = new Timestamp(0);
+        instance.lastAuth = new Timestamp(0);
+
+        instance.session = "0";
+
+        return instance;
     }
 
-    public static User authUser() {
-//        try {
-//            PacketManager.PacketGenerator(instance, new AuthPacket("guest", "guest"));
-//            com.mrheadshot62.api.types.User user = serverAnswerAuthUserPacket.getUser();
-//            instance.loginUser = user.getLogin();
-//            instance.nameUser = user.getFname();
-//            instance.countryUser = user.getCountry();
-//            instance.session = new Session(serverAnswerAuthUserPacket.getSession());
-//            instance.permissionLevel = 10;
-//            instance.isAuth = true;
-//            instance.id = user.getId();
-//            DataBase.getInstance().setUser(user);
-//        } catch (Exception e){
-//            guestUser("guest", "TestName", "TestCountry");
-//            e.printStackTrace();
-//        }
+    public static User initAuthUser(ServerAnswerAuthUserPacket serverAnswerAuthUserPacket) throws InstantiationException {
+        com.mrheadshot62.api.types.User user = serverAnswerAuthUserPacket.getUser();
+        instance.fname = user.getFname();
+        instance.lname = user.getLname();
+        instance.friends = user.getFriends();
+        instance.login = user.getLogin();
+        instance.nickname = user.getNickname();
+        instance.photos = user.getPhotos();
+        instance.profilePhotos = user.getProfilePhotos();
+        instance.email = user.getEmail();
+        instance.id = user.getId();
+        instance.permissionLvl = user.getPermissionLvl();
+        instance.age = user.getAge();
+        instance.contry = user.getContry();
+        instance.city = user.getCity();
+        instance.rating = user.getRating();
+        instance.isUpdated = user.getIsUpdated();
+        instance.counPhoto = user.getCounPhoto();
+        instance.balance = user.getBalance();
+        instance.online = user.getOnline();
+        instance.lastoOnline = user.getLastoOnline();
+        instance.registration = user.getRegistration();
+        instance.lastAuth = user.getLastAuth();
 
-        return getInstance();
-    }
+        instance.session = serverAnswerAuthUserPacket.getSession();
 
-    public static User guestUser(String loginUser, String nameUser, String countryUser){
-        instance = new User(loginUser, nameUser, countryUser, "guest" , PermissionLevel.GUEST);
-
-        return getInstance();
+        DataBase.getInstance().setUser(user);
+        return instance;
     }
 
     public static synchronized User getInstance(){
         return instance;
     }
 
-    private User(String loginUser, String nameUser, String countryUser, String sessionKey, int permissionLevel){
-        this.loginUser = loginUser;
-        this.nameUser = nameUser;
-        this.countryUser = countryUser;
-        this.session = new Session(sessionKey);
-        this.permissionLevel = permissionLevel;
-
-        if(session.checkSession()){
-            isLogin = true;
-        }
-    }
-
-
-    @Override
     public boolean isLogin() {
         return isLogin;
     }
 
-    @Override
     public boolean isBanned() {
         return isBanned;
     }
 
-    public String getLoginUser() {
-        return loginUser;
+    public String getFname() {
+        return fname;
     }
 
-    public String getNameUser() {
-        return nameUser;
+    public String getLname() {
+        return lname;
     }
 
-    public String getCountryUser() {
-        return countryUser;
+    public String getFriends() {
+        return friends;
     }
 
-    public String getSessionKey() {
-        return session.getSessionKey();
+    public String getLogin() {
+        return login;
     }
 
-    public int getPermissionLevel() {
-        return permissionLevel;
+    public String getNickname() {
+        return nickname;
     }
 
-    public Session getSession() {
-        return session;
+    public String getPhotos() {
+        return photos;
+    }
+
+    public String getProfilePhotos() {
+        return profilePhotos;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public int getId() {
         return id;
     }
 
+    public int getPermissionLvl() {
+        return permissionLvl;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public int getContry() {
+        return contry;
+    }
+
+    public int getCity() {
+        return city;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public int getIsUpdated() {
+        return isUpdated;
+    }
+
+    public int getCounPhoto() {
+        return counPhoto;
+    }
+
+    public int getBalance() {
+        return balance;
+    }
+
+    public byte getOnline() {
+        return online;
+    }
+
+    public Timestamp getLastoOnline() {
+        return lastoOnline;
+    }
+
+    public Timestamp getRegistration() {
+        return registration;
+    }
+
+    public Timestamp getLastAuth() {
+        return lastAuth;
+    }
+
+    public String getSession() {
+        return session;
+    }
+
+    public boolean isAuth() {
+        return isAuth;
+    }
 }

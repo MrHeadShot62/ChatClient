@@ -67,10 +67,10 @@ public class PacketManager{
     }
 
     private static PermissionPacket createPermissionPacket(User user){
-        return new PermissionPacket(user.getSessionKey(), user.getPermissionLevel(), user.getId());
+        return new PermissionPacket(user.getSession(), user.getPermissionLvl(), user.getId());
     }
 
     private static boolean sendPackets(MultiPacket multiPacket) {
-        return Application.getInstance().sendPacket(multiPacket);
+        return Util.sendPacket(multiPacket);
     }
 }

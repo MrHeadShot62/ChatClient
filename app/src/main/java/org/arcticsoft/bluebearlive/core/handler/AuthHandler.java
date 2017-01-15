@@ -11,6 +11,7 @@ import org.arcticsoft.bluebearlive.core.handler.abstracts.AAuthHandler;
 import org.arcticsoft.bluebearlive.core.logic.Application;
 import org.arcticsoft.bluebearlive.core.logic.DataBase;
 import org.arcticsoft.bluebearlive.core.logic.User;
+import org.arcticsoft.bluebearlive.core.logic.Util;
 
 class AuthHandler extends AAuthHandler {
 
@@ -18,9 +19,9 @@ class AuthHandler extends AAuthHandler {
 
     @Override
     protected void handleAuthPacket(ServerAnswerAuthUserPacket serverAnswerAuthPacket) {
-        if (!Application.getInstance().getUserApplication().isAuth){
-            Application.getInstance().setUserApplication(serverAnswerAuthPacket);
-            Application.getActivity().startActivity(new Intent(Application.getInstance().getContext(), MainActivity.class));
+        if (!Util.getUserApplication().isAuth){
+            Util.setUserApplication(serverAnswerAuthPacket);
+            Util.getContext().startActivity(new Intent(Util.getContext(), MainActivity.class));
         }
         try {
             DataBase.getInstance().setUser(serverAnswerAuthPacket.getUser());

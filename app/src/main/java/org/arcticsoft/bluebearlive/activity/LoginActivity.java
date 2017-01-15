@@ -3,6 +3,7 @@ package org.arcticsoft.bluebearlive.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +21,7 @@ import org.arcticsoft.bluebearlive.R;
  * Activity which displays a login screen to the user, offering registration as
  * well.
  */
-public class LoginVkActivity extends FragmentActivity {
+public class LoginActivity extends FragmentActivity {
 
     private boolean isResumed = false;
 
@@ -42,6 +43,7 @@ public class LoginVkActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vk_activity_start);
+        Log.d("LoginVk", "onCreate");
         VKSdk.wakeUpSession(this, new VKCallback<VKSdk.LoginState>() {
             @Override
             public void onResult(VKSdk.LoginState res) {
@@ -161,7 +163,7 @@ public class LoginVkActivity extends FragmentActivity {
             v.findViewById(R.id.continue_button).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ((LoginVkActivity) getActivity()).startTestActivity();
+                    ((LoginActivity) getActivity()).startTestActivity();
                 }
             });
 
@@ -170,7 +172,7 @@ public class LoginVkActivity extends FragmentActivity {
                 public void onClick(View view) {
                     VKSdk.logout();
                     if (!VKSdk.isLoggedIn()) {
-                        ((LoginVkActivity) getActivity()).showLogin();
+                        ((LoginActivity) getActivity()).showLogin();
                     }
                 }
             });

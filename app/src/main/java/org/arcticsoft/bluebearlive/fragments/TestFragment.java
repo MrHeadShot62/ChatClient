@@ -20,6 +20,7 @@ import org.arcticsoft.bluebearlive.activity.SignInActivity;
 import org.arcticsoft.bluebearlive.core.logic.Application;
 import org.arcticsoft.bluebearlive.core.logic.DataBase;
 import org.arcticsoft.bluebearlive.core.logic.PacketManager;
+import org.arcticsoft.bluebearlive.core.logic.Util;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,8 +43,6 @@ public class TestFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_main, null);
-        Application application = Application.getInstance();
-        application.setContext(getActivity().getApplicationContext());
 //
         textStatus = (TextView) v.findViewById(R.id.status_request);
         connectToServer = (Button) v.findViewById(R.id.buttonConnect);
@@ -54,30 +53,31 @@ public class TestFragment extends Fragment {
         connectToServer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                application.setServerConnection();
+                Util.setServerConnection();
             }
         });
 
-        v.findViewById(R.id.buttonLoadAuth).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Application.getInstance().loadUser();
-            }
-        });
+//        v.findViewById(R.id.buttonLoadAuth).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Application.getInstance().loadUser();
+//            }
+//        });
 
-        v.findViewById(R.id.buttonRetryAuth).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Application.getInstance().setGuest();
-            }
-        });
+//        v.findViewById(R.id.buttonRetryAuth).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Application.getInstance().setGuest();
+//            }
+//        });
 
         goCommandPacket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PacketManager.PacketGenerator(application.getUserApplication(), new CommandPacket(22, "sd"));
+                PacketManager.PacketGenerator(Util.getUserApplication(), new CommandPacket(22, "sd"));
             }
         });
+
         dellUserFromDB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

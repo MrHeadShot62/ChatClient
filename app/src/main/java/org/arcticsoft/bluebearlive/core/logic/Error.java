@@ -1,12 +1,10 @@
 package org.arcticsoft.bluebearlive.core.logic;
 
-import org.arcticsoft.bluebearlive.core.aLogic.AErrorCore;
-
 /**
  * Created by DmitriyRoot on 05.01.2017.
  */
 
-public class Error extends AErrorCore {
+public class Error{
 
     private final String ERRORNAME;
     private final int ERRORCODE;
@@ -28,32 +26,26 @@ public class Error extends AErrorCore {
         sendDataError();
     }
 
-    @Override
     public int getErrorCode() {
         return ERRORCODE;
     }
 
-    @Override
     public String getErrorCodeString() {
         return ERRORNAME;
     }
 
-    @Override
     public void sendDataError() {
         // TODO add send error on server
     }
 
-    @Override
     public User getUserThrowExeption() {
         return ERROUSER;
     }
 
-    @Override
     public ErrorType getErrorType() {
         return ERRORTYPE;
     }
 
-    @Override
     public String getErrorDate() {
         return errorData;
     }

@@ -69,7 +69,9 @@ public class DataBase extends SQLiteOpenHelper {
 
     public DataBase(Context context) {
         super(context, DB_NAME, null,DB_VERSION);
-        DataBase.instance = this;
+        if (instance == null){
+            DataBase.instance = this;
+        }
     }
 
     public static DataBase getInstance() throws InstantiationException{
