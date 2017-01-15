@@ -83,7 +83,7 @@ public class TestFragment extends Fragment {
             public void onClick(View view) {
                 try {
                     DataBase.getInstance().deleteUser();
-                    Toast.makeText(getContext(), "User Del", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v.getContext(), "User Del", Toast.LENGTH_SHORT).show();
                     Log.e("DellUserFromDB", "DEL");
                     startActivity(new Intent(getActivity().getApplicationContext(), SignInActivity.class));
                 } catch (java.lang.InstantiationException e) {

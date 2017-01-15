@@ -32,7 +32,7 @@ public class User extends AUser {
             com.mrheadshot62.api.types.User user = serverAnswerAuthUserPacket.getUser();
             instance.loginUser = user.getLogin();
             instance.nameUser = user.getFname();
-            instance.countryUser = user.getCountry();
+            //instance.countryUser = user.getCountry();
             instance.session = new Session(serverAnswerAuthUserPacket.getSession());
             instance.permissionLevel = 10;
             instance.isAuth = true;

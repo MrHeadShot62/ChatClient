@@ -20,13 +20,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".fragments.FeedLine.DetailActivity"/>
-        <activity android:name=".activity.SignInActivity">
+        <activity android:name=".activity.SignInActivity"/>
 
-        </activity>
+        <activity android:name="com.vk.sdk.VKServiceActivity" android:label="ServiceActivity" android:theme="@style/VK.Transparent" />
 
-        <activity android:name=".activity.StateSampleActivity">
-
-        </activity>
     </application>
 
 </manifest>

@@ -12,6 +12,8 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.mrheadshot62.api.types.User;
+import com.vk.sdk.VKSdk;
+import com.vk.sdk.util.VKUtil;
 
 import org.arcticsoft.bluebearlive.R;
 import org.arcticsoft.bluebearlive.core.logic.Application;
@@ -42,6 +44,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_horizontal_ntb);
+        String[] fingerprints = VKUtil.getCertificateFingerprint(this, this.getPackageName());
+        for (String s:fingerprints){
+            Log.d("KEYSS", s);
+        }
 
         Application.getInstance().setContext(getApplicationContext());
         Application.setActivity(this);

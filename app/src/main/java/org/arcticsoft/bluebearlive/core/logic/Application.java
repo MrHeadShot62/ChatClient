@@ -2,6 +2,7 @@ package org.arcticsoft.bluebearlive.core.logic;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
@@ -12,7 +13,11 @@ import com.mrheadshot62.api.PermissionLevel;
 import com.mrheadshot62.api.types.AuthPacket;
 import com.mrheadshot62.api.types.ReportPacket;
 import com.mrheadshot62.api.types.answer.ServerAnswerAuthUserPacket;
+import com.vk.sdk.VKAccessToken;
+import com.vk.sdk.VKAccessTokenTracker;
+import com.vk.sdk.VKSdk;
 
+import org.arcticsoft.bluebearlive.activity.LoginVkActivity;
 import org.arcticsoft.bluebearlive.core.aLogic.AApplication;
 import org.arcticsoft.bluebearlive.socket.ConnectionController;
 
@@ -22,7 +27,7 @@ import java.util.concurrent.ExecutionException;
  * Created by DmitriyRoot on 06.01.2017.
  */
 
-public class Application{
+public class Application extends android.app.Application{
 
     private static final String TAG = "APPLICATION";
     private static final String SERVERIP = "194.117.253.208";
@@ -39,6 +44,14 @@ public class Application{
         }else {
             return instance;
         }
+    }
+
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        vkAccessTokenTracker.startTracking();
+        VKSdk.initialize(getApplicationContext());
     }
 
     public static Activity getActivity() {
@@ -209,4 +222,16 @@ public class Application{
             return false;
         }
     }
+
+    VKAccessTokenTracker vkAccessTokenTracker = new VKAccessTokenTracker() {
+        @Override
+        public void onVKAccessTokenChanged(VKAccessToken oldToken, VKAccessToken newToken) {
+            if (newToken == null) {
+                Toast.makeText(Application.this, "AccessToken invalidated", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(Application.this, LoginVkActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        }
+    };
 }
