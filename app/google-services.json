@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "832967886704",
+    "project_id": "bluebearmessanger"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:832967886704:android:baf6b658afe8fc96",
+        "android_client_info": {
+          "package_name": "org.arcticsoft.bluebearlive"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "832967886704-8nam6k8u5c7r8c3hiapjsrnatrejncek.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.arcticsoft.bluebearlive",
+            "certificate_hash": "D76EA7D3493E3F02FA5D00CB63D38E893D668051"
+          }
+        },
+        {
+          "client_id": "832967886704-t9v2s2sc31smb313pjnf5m4soljh0t54.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBaFvROcu8mCtSjnM4NbIdGk28Mq4mhCHg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

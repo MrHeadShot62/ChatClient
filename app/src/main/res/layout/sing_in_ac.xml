@@ -11,44 +11,36 @@
         android:layout_centerInParent="true"
         android:orientation="vertical">
 
-        <com.wrapp.floatlabelededittext.FloatLabeledEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/editEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:hint="Your Name"
-                android:inputType="textPersonName"
-                android:textColor="@color/primary" />
-
-        </com.wrapp.floatlabelededittext.FloatLabeledEditText>
-
-        <com.wrapp.floatlabelededittext.FloatLabeledEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        <EditText
-            android:id="@+id/editPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:hint="Your Passwors"
-            android:inputType="textPassword"
-            android:textColor="@color/primary" />
-
-        </com.wrapp.floatlabelededittext.FloatLabeledEditText>
-
         <com.dd.processbutton.iml.ActionProcessButton
-            android:id="@+id/btnSignIn"
+            android:id="@+id/google_sign_out_button"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginBottom="16dp"
-            android:text="@string/Sign_in"
+            android:text="Out Google"
             android:textColor="@android:color/white"
             android:textSize="18sp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="45dp">
+
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/sign_in_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+
+            <com.dd.processbutton.iml.ActionProcessButton
+                android:id="@+id/btnSignInVk"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Вк"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:layout_weight="1" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

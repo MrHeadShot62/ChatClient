@@ -9,4 +9,6 @@
     <dimen name="divider_height">@dimen/gap</dimen>
     <dimen name="gap">3dp</dimen>
     <color name="frame">@android:color/black</color>
+
+    <dimen name="g_top_margin">100dp</dimen>
 </resources>

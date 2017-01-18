@@ -12,11 +12,9 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.mrheadshot62.api.types.User;
-import com.vk.sdk.VKSdk;
 import com.vk.sdk.util.VKUtil;
 
 import org.arcticsoft.bluebearlive.R;
-import org.arcticsoft.bluebearlive.core.logic.Application;
 import org.arcticsoft.bluebearlive.core.logic.DataBase;
 import org.arcticsoft.bluebearlive.fragments.FeedlineFragment;
 import org.arcticsoft.bluebearlive.fragments.NoticeFragment;

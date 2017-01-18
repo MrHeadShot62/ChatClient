@@ -55,18 +55,21 @@ dependencies {
     compile 'com.facebook.fresco:fresco:0.5.3'
     compile 'com.android.support:cardview-v7:25.1.0'
     compile 'com.android.support:support-v4:25.1.0'
-    testCompile 'junit:junit:4.12'
     compile 'com.github.gigamole.arcprogressstackview:library:1.0.3'
     compile 'com.github.bmelnychuk:atv:1.2.0'
     compile 'com.github.johnkil.print:print:1.2.2'
     compile 'com.jpardogo.listbuddies:library:1.1.1'
     compile 'com.jakewharton:butterknife:8.4.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'nl.dionsegijn:pixelate:1.0.2'
     compile 'com.github.chrisbanes:PhotoView:1.3.1'
     compile 'com.github.dmytrodanylyk.android-process-button:library:1.0.4'
     compile 'com.wrapp.floatlabelededittext:library:0.0.6'
-
     compile 'com.vk:androidsdk:1.6.8'
+    compile 'com.google.android.gms:play-services-auth:10.0.1'
+    testCompile 'junit:junit:4.12'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+
 }
+
+apply plugin: 'com.google.gms.google-services'
