@@ -1,9 +1,11 @@
 package org.arcticsoft.bluebearlive.core.logic;
 
+import com.mrheadshot62.api.MultiPacket;
 import com.mrheadshot62.api.Packet;
 import com.mrheadshot62.api.Types;
-import com.mrheadshot62.api.MultiPacket;
 import com.mrheadshot62.api.types.AuthPacket;
+import com.mrheadshot62.api.types.AuthReadyUser;
+import com.mrheadshot62.api.types.AuthRegistrationPacket;
 import com.mrheadshot62.api.types.CommandPacket;
 import com.mrheadshot62.api.types.CompressendImagePacket;
 import com.mrheadshot62.api.types.ImagePacket;
@@ -11,8 +13,6 @@ import com.mrheadshot62.api.types.PermissionPacket;
 import com.mrheadshot62.api.types.RegisterPacket;
 import com.mrheadshot62.api.types.ReportPacket;
 import com.mrheadshot62.api.types.UserPacket;
-
-import org.arcticsoft.bluebearlive.socket.ConnectionController;
 
 /**
  * Created by DmitriyRoot on 05.01.2017.
@@ -64,6 +64,14 @@ public class PacketManager{
 
     public static void PacketGenerator(User user, ReportPacket reportPacket){
         sendPackets(new MultiPacket(new Packet(createPermissionPacket(user), Types.PERMISSION), new Packet(reportPacket, Types.REPORT))); //TODO Andrey add yo Types
+    }
+
+    public static void PacketGenerator(User user, AuthReadyUser readyUser){
+        sendPackets(new MultiPacket(new Packet(createPermissionPacket(user), Types.PERMISSION), new Packet(readyUser, Types.AUTH_READY_USER))); //TODO Andrey add yo Types
+    }
+
+    public static void PacketGenerator(User user, AuthRegistrationPacket reg){
+        sendPackets(new MultiPacket(new Packet(createPermissionPacket(user), Types.PERMISSION), new Packet(reg, Types.AUTH_REGISTRATION))); //TODO Andrey add yo Types
     }
 
     private static PermissionPacket createPermissionPacket(User user){
