@@ -1,5 +1,7 @@
 package org.arcticsoft.bluebearlive.core.logic;
 
+import android.util.Log;
+
 import com.mrheadshot62.api.MultiPacket;
 import com.mrheadshot62.api.Packet;
 import com.mrheadshot62.api.Types;
@@ -19,6 +21,7 @@ import com.mrheadshot62.api.types.UserPacket;
 
 public class PacketManager{
 
+    private static final String TAG = "PACKETMANAGER";
     private static PacketManager instance = null;
 
     private PacketManager() {
@@ -66,6 +69,7 @@ public class PacketManager{
     }
 
     public static void PacketGenerator(User user, AuthorisationPacket reg){
+        Log.d(TAG, "Send AuthorisationPacket");
         sendPackets(new MultiPacket(new Packet(createPermissionPacket(user), Types.PERMISSION), new Packet(reg, Types.AUTH_FIRST_STEP)));
     }
 

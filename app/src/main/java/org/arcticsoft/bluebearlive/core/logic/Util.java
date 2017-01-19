@@ -54,6 +54,7 @@ public class Util{
 
     public static boolean setServerConnection() {
         if (!ConnectionController.isConnected){
+            Log.d(TAG, "CONNNNNECTED!");
             return ConnectionController.start(Application.getServerIP());
         }
         Toast.makeText(getContext(), "IS CONNECTED!", Toast.LENGTH_SHORT).show();
