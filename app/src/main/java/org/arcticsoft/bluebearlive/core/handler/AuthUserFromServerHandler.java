@@ -8,14 +8,12 @@ import com.mrheadshot62.api.types.answer.ServerAnswerAuthUserPacket;
 
 import org.arcticsoft.bluebearlive.activity.MainActivity;
 import org.arcticsoft.bluebearlive.core.handler.abstracts.AAuthHandler;
-import org.arcticsoft.bluebearlive.core.logic.Application;
 import org.arcticsoft.bluebearlive.core.logic.DataBase;
-import org.arcticsoft.bluebearlive.core.logic.User;
 import org.arcticsoft.bluebearlive.core.logic.Util;
 
-class AuthHandler extends AAuthHandler {
+class AuthUserFromServerHandler extends AAuthHandler {
 
-    private static final String TAG = "AuthHandler";
+    private static final String TAG = "AuthFromServerHandler";
 
     @Override
     protected void handleAuthPacket(ServerAnswerAuthUserPacket serverAnswerAuthPacket) {
@@ -24,9 +22,9 @@ class AuthHandler extends AAuthHandler {
             Util.getContext().startActivity(new Intent(Util.getContext(), MainActivity.class));
         }
         try {
-            DataBase.getInstance().setUser(serverAnswerAuthPacket.getUser());
+            DataBase.getInstance().setUser(serverAnswerAuthPacket.getUserDatas());
         } catch (InstantiationException e) {
-            Log.e(TAG, "DataBase not instantiate");
+            Log.e(TAG, "DataBase not install");
         }
         Log.d(TAG, String.format("SESSION: %s", serverAnswerAuthPacket.getSession()));
     }

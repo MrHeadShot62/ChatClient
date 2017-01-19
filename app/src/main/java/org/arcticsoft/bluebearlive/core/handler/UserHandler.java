@@ -1,7 +1,5 @@
 package org.arcticsoft.bluebearlive.core.handler;
 
-import com.mrheadshot62.api.types.User;
-import com.mrheadshot62.api.types.UserPacket;
 import com.mrheadshot62.api.types.answer.ServerAnswerUserPacket;
 
 import org.arcticsoft.bluebearlive.core.handler.abstracts.AUserHandler;

@@ -1,6 +1,7 @@
 package org.arcticsoft.bluebearlive.core.logic;
 
 import com.mrheadshot62.api.PermissionLevel;
+import com.mrheadshot62.api.types.UserDatas;
 import com.mrheadshot62.api.types.answer.ServerAnswerAuthUserPacket;
 
 import java.sql.Timestamp;
@@ -78,7 +79,7 @@ public class User{
 
     public static User initAuthUser(ServerAnswerAuthUserPacket serverAnswerAuthUserPacket) throws InstantiationException {
         getInstance();
-        com.mrheadshot62.api.types.User user = serverAnswerAuthUserPacket.getUser();
+        UserDatas user = serverAnswerAuthUserPacket.getUserDatas();
         instance.fname = user.getFname();
         instance.lname = user.getLname();
         instance.friends = user.getFriends();
@@ -109,7 +110,7 @@ public class User{
         return instance;
     }
 
-    public static User initAuthUserFromDB(com.mrheadshot62.api.types.User user, String session) throws InstantiationException {
+    public static User initAuthUserFromDB(UserDatas user, String session) throws InstantiationException {
         getInstance();
         instance.fname = user.getFname();
         instance.lname = user.getLname();

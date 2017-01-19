@@ -18,8 +18,8 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
-import com.mrheadshot62.api.types.AuthRegistrationPacket;
 import com.mrheadshot62.api.types.AuthType;
+import com.mrheadshot62.api.types.AuthorisationPacket;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKCallback;
 import com.vk.sdk.VKScope;
@@ -132,7 +132,7 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
             @Override
             public void onResult(VKAccessToken res) {
                 Toast.makeText(sing, "User is Auth VK", Toast.LENGTH_SHORT).show();
-                PacketManager.PacketGenerator(Util.getUserApplication(), new AuthRegistrationPacket(AuthType.VK, res.userId));
+                PacketManager.PacketGenerator(Util.getUserApplication(), new AuthorisationPacket(AuthType.VK, res.userId));
             }
             @Override
             public void onError(VKError error) {
@@ -151,7 +151,7 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
         if (result.isSuccess()) {
             GoogleSignInAccount acct = result.getSignInAccount();
             Toast.makeText(this, "User is Auth - "+acct.getDisplayName(), Toast.LENGTH_SHORT).show();
-            PacketManager.PacketGenerator(Util.getUserApplication(), new AuthRegistrationPacket(AuthType.GOOGLE, acct.getEmail()));
+            PacketManager.PacketGenerator(Util.getUserApplication(), new AuthorisationPacket(AuthType.GOOGLE, acct.getEmail()));
         } else {
             Toast.makeText(this, "User is no Auth ", Toast.LENGTH_SHORT).show();
         }

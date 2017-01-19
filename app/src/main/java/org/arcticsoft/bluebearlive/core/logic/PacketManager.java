@@ -3,9 +3,8 @@ package org.arcticsoft.bluebearlive.core.logic;
 import com.mrheadshot62.api.MultiPacket;
 import com.mrheadshot62.api.Packet;
 import com.mrheadshot62.api.Types;
-import com.mrheadshot62.api.types.AuthPacket;
-import com.mrheadshot62.api.types.AuthReadyUser;
-import com.mrheadshot62.api.types.AuthRegistrationPacket;
+import com.mrheadshot62.api.types.AuthCheckSecretUserKeyPacket;
+import com.mrheadshot62.api.types.AuthorisationPacket;
 import com.mrheadshot62.api.types.CommandPacket;
 import com.mrheadshot62.api.types.CompressendImagePacket;
 import com.mrheadshot62.api.types.ImagePacket;
@@ -34,10 +33,6 @@ public class PacketManager{
         }
     }
 
-    public static void PacketGenerator(User user, AuthPacket authPacket) {
-        sendPackets(new MultiPacket(new Packet(createPermissionPacket(user), Types.PERMISSION), new Packet(authPacket, Types.AUTH)));
-    }
-
     public static void PacketGenerator(User user, CommandPacket commandPacket) {
         sendPackets(new MultiPacket(new Packet(createPermissionPacket(user), Types.PERMISSION), new Packet(commandPacket, Types.Command)));
     }
@@ -63,15 +58,15 @@ public class PacketManager{
     }
 
     public static void PacketGenerator(User user, ReportPacket reportPacket){
-        sendPackets(new MultiPacket(new Packet(createPermissionPacket(user), Types.PERMISSION), new Packet(reportPacket, Types.REPORT))); //TODO Andrey add yo Types
+        sendPackets(new MultiPacket(new Packet(createPermissionPacket(user), Types.PERMISSION), new Packet(reportPacket, Types.REPORT)));
     }
 
-    public static void PacketGenerator(User user, AuthReadyUser readyUser){
-        sendPackets(new MultiPacket(new Packet(createPermissionPacket(user), Types.PERMISSION), new Packet(readyUser, Types.AUTH_READY_USER))); //TODO Andrey add yo Types
+    public static void PacketGenerator(User user, AuthCheckSecretUserKeyPacket readyUser){
+        sendPackets(new MultiPacket(new Packet(createPermissionPacket(user), Types.PERMISSION), new Packet(readyUser, Types.AUTH_SECRET_KEY)));
     }
 
-    public static void PacketGenerator(User user, AuthRegistrationPacket reg){
-        sendPackets(new MultiPacket(new Packet(createPermissionPacket(user), Types.PERMISSION), new Packet(reg, Types.AUTH_REGISTRATION))); //TODO Andrey add yo Types
+    public static void PacketGenerator(User user, AuthorisationPacket reg){
+        sendPackets(new MultiPacket(new Packet(createPermissionPacket(user), Types.PERMISSION), new Packet(reg, Types.AUTH_FIRST_STEP)));
     }
 
     private static PermissionPacket createPermissionPacket(User user){

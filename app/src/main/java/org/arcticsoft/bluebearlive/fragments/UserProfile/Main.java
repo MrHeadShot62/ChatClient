@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
+import com.mrheadshot62.api.types.UserDatas;
 import com.unnamed.b.atv.model.TreeNode;
 import com.unnamed.b.atv.view.AndroidTreeView;
 
@@ -51,7 +52,7 @@ public class Main extends Fragment {
         TreeNode myProfileInfo = new TreeNode(new IconTreeItemHolder.IconTreeItem(R.string.ic_person, "Info")).setViewHolder(new ProfileHolder(getActivity()));
         TreeNode myProfileSettings = new TreeNode(new IconTreeItemHolder.IconTreeItem(R.string.ic_person, "Settings")).setViewHolder(new ProfileHolder(getActivity()));
         TreeNode myProfileAction = new TreeNode(new IconTreeItemHolder.IconTreeItem(R.string.ic_person, "Actions")).setViewHolder(new ProfileHolder(getActivity()));
-        com.mrheadshot62.api.types.User user = null;
+        UserDatas user = null;
         try {
             user = DataBase.getInstance().getUser();
         } catch (java.lang.InstantiationException e) {

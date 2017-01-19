@@ -2,7 +2,7 @@ package org.arcticsoft.bluebearlive.core.handler;
 
 import android.content.Intent;
 
-import com.mrheadshot62.api.types.answer.ServerAnswerSecondAuth;
+import com.mrheadshot62.api.types.answer.ServerAnswerCheckSecretKeyAuth;
 
 import org.arcticsoft.bluebearlive.activity.SecondStepAuth;
 import org.arcticsoft.bluebearlive.core.handler.abstracts.ASecondAuthHandler;
@@ -17,14 +17,14 @@ class SecondAuthHandler extends ASecondAuthHandler {
     private static final String TAG = "SECOND AUTH HANDLER: ";
 
     @Override
-    protected void handleAnswerPacket(ServerAnswerSecondAuth serverAnswerSecondAuth) {
+    protected void handleAnswerPacket(ServerAnswerCheckSecretKeyAuth serverAnswerCheckSecretKeyAuth) {
         Intent intent = new Intent(Util.getContext(), SecondStepAuth.class);
-        if (serverAnswerSecondAuth.isToRegister()){
+        if (serverAnswerCheckSecretKeyAuth.isToRegister()){
             intent.putExtra("typeAuth", "REG");
         }else {
             intent.putExtra("typeAuth", "LOG");
         }
-        intent.putExtra("userID", serverAnswerSecondAuth.getId());
+        intent.putExtra("userID", serverAnswerCheckSecretKeyAuth.getId());
         Util.mainActivity.startActivity(intent);
     }
 }

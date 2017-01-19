@@ -1,7 +1,7 @@
 package org.arcticsoft.bluebearlive.core.handler.abstracts;
 
 import com.mrheadshot62.api.Packet;
-import com.mrheadshot62.api.types.answer.ServerAnswerSecondAuth;
+import com.mrheadshot62.api.types.answer.ServerAnswerCheckSecretKeyAuth;
 
 /**
  * Created by DmitriyRoot on 07.01.2017.
@@ -9,16 +9,16 @@ import com.mrheadshot62.api.types.answer.ServerAnswerSecondAuth;
 
 public abstract class ASecondAuthHandler {
 
-    ServerAnswerSecondAuth serverAnswerSecondAuth;
+    ServerAnswerCheckSecretKeyAuth serverAnswerCheckSecretKeyAuth;
 
     public void handlePacket(Packet p) {
         try {
-            serverAnswerSecondAuth = (ServerAnswerSecondAuth)p.getData();
-            handleAnswerPacket(serverAnswerSecondAuth);
+            serverAnswerCheckSecretKeyAuth = (ServerAnswerCheckSecretKeyAuth)p.getData();
+            handleAnswerPacket(serverAnswerCheckSecretKeyAuth);
         }catch (Exception e){
             e.printStackTrace();
         }
     }
 
-    protected abstract void handleAnswerPacket(ServerAnswerSecondAuth serverAnswerSecondAuth);
+    protected abstract void handleAnswerPacket(ServerAnswerCheckSecretKeyAuth serverAnswerCheckSecretKeyAuth);
 }

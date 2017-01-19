@@ -1,21 +1,16 @@
 package org.arcticsoft.bluebearlive.core.logic;
 
-import android.accounts.AccountManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.Debug;
 import android.util.Log;
+
+import com.mrheadshot62.api.types.UserDatas;
 
 import java.sql.Timestamp;
 import java.util.Map;
-
-
-/**
- * Created by novak on 10.01.2017.
- */
 
 public class DataBase extends SQLiteOpenHelper {
 
@@ -82,7 +77,7 @@ public class DataBase extends SQLiteOpenHelper {
         }
     }
 
-    public void setUser(com.mrheadshot62.api.types.User u){
+    public void setUser(UserDatas u){
         deleteUser();
         ContentValues cv = new ContentValues();
         cv.put(USER_LOGIN, u.getLogin());
@@ -107,13 +102,13 @@ public class DataBase extends SQLiteOpenHelper {
         }
     }
 
-    public com.mrheadshot62.api.types.User getUser() {
-        com.mrheadshot62.api.types.User user=null;
+    public UserDatas getUser() {
+        UserDatas user=null;
         Cursor c = super.getReadableDatabase().query(USER, null, null, null, null, null, null);
         if (c != null) {
             if (c.moveToFirst()) {
                 Log.d("DB", String.valueOf(c.getColumnIndex(USER_COUNT_PHOTO)));
-                user = new com.mrheadshot62.api.types.User(c.getInt(c.getColumnIndex("id")),
+                user = new UserDatas(c.getInt(c.getColumnIndex("id")),
                         c.getString(c.getColumnIndex(USER_LOGIN)),
                         c.getString(c.getColumnIndex(USER_FNAME)),
                         c.getString(c.getColumnIndex(USER_LNAME)),

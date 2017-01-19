@@ -8,7 +8,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mrheadshot62.api.types.AuthReadyUser;
+import com.mrheadshot62.api.types.AuthCheckSecretUserKeyPacket;
 
 import org.arcticsoft.bluebearlive.R;
 import org.arcticsoft.bluebearlive.core.logic.PacketManager;
@@ -47,7 +47,7 @@ public class SecondStepAuth extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (!secretKey.getText().toString().equals("")){
-                    PacketManager.PacketGenerator(Util.getUserApplication(), new AuthReadyUser(secretKey.getText().toString(), getIntent().getIntExtra("userID", 0), true ));
+                    PacketManager.PacketGenerator(Util.getUserApplication(), new AuthCheckSecretUserKeyPacket(secretKey.getText().toString(), getIntent().getIntExtra("userID", 0) ));
                     Toast.makeText(Util.getContext(), "Packet Registr sended on server", Toast.LENGTH_SHORT).show();
                 }else {
                     Toast.makeText(Util.getContext(), "empty in secret key", Toast.LENGTH_SHORT).show();
@@ -62,7 +62,7 @@ public class SecondStepAuth extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (!secretKey.getText().toString().equals("")){
-                    PacketManager.PacketGenerator(Util.getUserApplication(), new AuthReadyUser(secretKey.getText().toString(), getIntent().getIntExtra("userID", 0), false ));
+                    PacketManager.PacketGenerator(Util.getUserApplication(), new AuthCheckSecretUserKeyPacket(secretKey.getText().toString(), getIntent().getIntExtra("userID", 0)));
                     Toast.makeText(Util.getContext(), "Packet Login sended on server", Toast.LENGTH_SHORT).show();
                 }else {
                     Toast.makeText(Util.getContext(), "empty in secret key", Toast.LENGTH_SHORT).show();

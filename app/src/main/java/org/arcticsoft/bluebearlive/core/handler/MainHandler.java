@@ -1,7 +1,5 @@
 package org.arcticsoft.bluebearlive.core.handler;
 
-import android.util.Log;
-
 import com.mrheadshot62.api.Packet;
 import com.mrheadshot62.api.TypesAnswer;
 import com.mrheadshot62.api.types.PermissionPacket;
@@ -20,12 +18,11 @@ public class MainHandler {
         this.packets = packets;
         for (Packet p : packets) {
             switch (p.getType()){
-                case TypesAnswer.USERAUTHPACKET:
-                    Log.d("packetAuth", "prin9Il");
-                    new AuthHandler().handlePacket(p);
-                    break;
                 case TypesAnswer.ONLYCODE:
                     new AnswerHandler().handlePacket(p);
+                    break;
+                case TypesAnswer.AUTH_USER_FROM_SERVER:
+                    new AuthUserFromServerHandler().handlePacket(p);
                     break;
                 case TypesAnswer.USERPACKET:
                     //TODO Большой Ди, ты знаешь что делать... Database.setUser(User u);Database.getUser();
@@ -33,7 +30,7 @@ public class MainHandler {
                 case TypesAnswer.REPORTPACKET:
                     new ReportHandler().handlePacket(p);
                     break;
-                case TypesAnswer.SECOND_AUTH:
+                case TypesAnswer.AUTH_CHECK_SECRET_KEY:
                     new SecondAuthHandler().handlePacket(p);
                     break;
                 default:

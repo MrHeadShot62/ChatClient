@@ -11,6 +11,8 @@ import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.mrheadshot62.api.types.UserDatas;
+
 import org.arcticsoft.bluebearlive.R;
 import org.arcticsoft.bluebearlive.core.logic.DataBase;
 import org.arcticsoft.bluebearlive.core.logic.User;
@@ -30,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     NavigationTabBar navigationTabBar;
     FrameLayout fragment;
 
-    com.mrheadshot62.api.types.User userFromDB;
+    UserDatas userFromDB;
     org.arcticsoft.bluebearlive.core.logic.User appUser;
 
     int active = -1;
