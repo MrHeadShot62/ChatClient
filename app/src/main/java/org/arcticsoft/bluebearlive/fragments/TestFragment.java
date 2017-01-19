@@ -13,11 +13,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mrheadshot62.api.types.CommandPacket;
-import com.mrheadshot62.api.types.UserPacket;
 
 import org.arcticsoft.bluebearlive.R;
 import org.arcticsoft.bluebearlive.activity.SignInActivity;
-import org.arcticsoft.bluebearlive.core.logic.Application;
 import org.arcticsoft.bluebearlive.core.logic.DataBase;
 import org.arcticsoft.bluebearlive.core.logic.PacketManager;
 import org.arcticsoft.bluebearlive.core.logic.Util;
@@ -42,13 +40,13 @@ public class TestFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.activity_main, null);
+        View view = inflater.inflate(R.layout.app_main_test_poligon_activity, null);
 //
-        textStatus = (TextView) v.findViewById(R.id.status_request);
-        connectToServer = (Button) v.findViewById(R.id.buttonConnect);
-        goAuthPacket = (Button) v.findViewById(R.id.buttonAuth);
-        goCommandPacket = (Button) v.findViewById(R.id.buttonSendCommandPacket);
-        dellUserFromDB = (Button) v.findViewById(R.id.delUserFromDB);
+        textStatus = (TextView) view.findViewById(R.id.status_request);
+        connectToServer = (Button) view.findViewById(R.id.buttonConnect);
+        goAuthPacket = (Button) view.findViewById(R.id.buttonAuth);
+        goCommandPacket = (Button) view.findViewById(R.id.buttonSendCommandPacket);
+        dellUserFromDB = (Button) view.findViewById(R.id.delUserFromDB);
 
         connectToServer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,14 +55,14 @@ public class TestFragment extends Fragment {
             }
         });
 
-//        v.findViewById(R.id.buttonLoadAuth).setOnClickListener(new View.OnClickListener() {
+//        view.findViewById(R.id.buttonLoadAuth).setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
 //                Application.getInstance().loadUser();
 //            }
 //        });
 
-//        v.findViewById(R.id.buttonRetryAuth).setOnClickListener(new View.OnClickListener() {
+//        view.findViewById(R.id.buttonRetryAuth).setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
 //                Application.getInstance().setGuest();
@@ -83,18 +81,19 @@ public class TestFragment extends Fragment {
             public void onClick(View view) {
                 try {
                     DataBase.getInstance().deleteUser();
-                    Toast.makeText(v.getContext(), "User Del", Toast.LENGTH_SHORT).show();
-                    Log.e("DellUserFromDB", "DEL");
+                    Toast.makeText(view.getContext(), "Sing Out", Toast.LENGTH_SHORT).show();
+                    Log.d("LOGIN", "Sing Out");
+                    Util.userApplicationSingOut();
                     startActivity(new Intent(getActivity().getApplicationContext(), SignInActivity.class));
                 } catch (java.lang.InstantiationException e) {
-                    Log.e("DellUserFromDB", "NOT DEL", e);
+                    Log.d("DellUserFromDB", "NOT SING OUT", e);
                     e.printStackTrace();
                 }
 
             }
         });
 
-        return v;
+        return view;
     }
 
 }

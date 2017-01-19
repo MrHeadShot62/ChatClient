@@ -39,7 +39,7 @@ public class FeedlineFragment extends Fragment implements ListBuddiesLayout.OnBu
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.feed_line_global_fragment_main, container, false);
+        view = inflater.inflate(R.layout.app_main_feed_line, container, false);
 
         mImagesLeft.addAll(Arrays.asList(ImagesUrls.imageUrls_left));
         mImagesRight.addAll(Arrays.asList(ImagesUrls.imageUrls_right));

@@ -33,6 +33,9 @@ public class MainHandler {
                 case TypesAnswer.REPORTPACKET:
                     new ReportHandler().handlePacket(p);
                     break;
+                case TypesAnswer.SECOND_AUTH:
+                    new SecondAuthHandler().handlePacket(p);
+                    break;
                 default:
                     break;
             }

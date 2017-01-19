@@ -20,6 +20,15 @@
             android:textColor="@android:color/white"
             android:textSize="18sp" />
 
+        <com.dd.processbutton.iml.ActionProcessButton
+            android:id="@+id/test_auth"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="16dp"
+            android:text="Test Auth"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"

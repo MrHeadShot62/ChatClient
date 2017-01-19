@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import org.arcticsoft.bluebearlive.R;
 
@@ -23,7 +22,7 @@ public class RandomUserFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.main_random_user, null);
+        View v = inflater.inflate(R.layout.app_main_random_user, null);
 
         return v;
     }

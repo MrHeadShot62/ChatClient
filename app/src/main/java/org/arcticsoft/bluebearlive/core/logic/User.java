@@ -1,5 +1,6 @@
 package org.arcticsoft.bluebearlive.core.logic;
 
+import com.mrheadshot62.api.PermissionLevel;
 import com.mrheadshot62.api.types.answer.ServerAnswerAuthUserPacket;
 
 import java.sql.Timestamp;
@@ -46,6 +47,7 @@ public class User{
     private User(){}
 
     public static User initGuestUser(){
+        getInstance();
         instance.fname = "N/A";
         instance.lname = "N/A";
         instance.friends = "N/A";
@@ -55,7 +57,7 @@ public class User{
         instance.profilePhotos = "N/A";
         instance.email = "N/A";
         instance.id = 0;
-        instance.permissionLvl = 0;
+        instance.permissionLvl = PermissionLevel.GUEST;
         instance.age = 0;
         instance.contry = 0;
         instance.city = 0;
@@ -64,6 +66,7 @@ public class User{
         instance.counPhoto = 0;
         instance.balance = 0;
         instance.online = 0;
+        instance.isAuth = false;
         instance.lastoOnline = new Timestamp(0);
         instance.registration = new Timestamp(0);
         instance.lastAuth = new Timestamp(0);
@@ -74,6 +77,7 @@ public class User{
     }
 
     public static User initAuthUser(ServerAnswerAuthUserPacket serverAnswerAuthUserPacket) throws InstantiationException {
+        getInstance();
         com.mrheadshot62.api.types.User user = serverAnswerAuthUserPacket.getUser();
         instance.fname = user.getFname();
         instance.lname = user.getLname();
@@ -99,12 +103,89 @@ public class User{
 
         instance.session = serverAnswerAuthUserPacket.getSession();
 
+        instance.isAuth = true;
+
         DataBase.getInstance().setUser(user);
         return instance;
     }
 
-    public static synchronized User getInstance(){
+    public static User initAuthUserFromDB(com.mrheadshot62.api.types.User user, String session) throws InstantiationException {
+        getInstance();
+        instance.fname = user.getFname();
+        instance.lname = user.getLname();
+        instance.friends = user.getFriends();
+        instance.login = user.getLogin();
+        instance.nickname = user.getNickname();
+        instance.photos = user.getPhotos();
+        instance.profilePhotos = user.getProfilePhotos();
+        instance.email = user.getEmail();
+        instance.id = user.getId();
+        instance.permissionLvl = user.getPermissionLvl();
+        instance.age = user.getAge();
+        instance.contry = user.getContry();
+        instance.city = user.getCity();
+        instance.rating = user.getRating();
+        instance.isUpdated = user.getIsUpdated();
+        instance.counPhoto = user.getCounPhoto();
+        instance.balance = user.getBalance();
+        instance.online = user.getOnline();
+        instance.lastoOnline = user.getLastoOnline();
+        instance.registration = user.getRegistration();
+        instance.lastAuth = user.getLastAuth();
+
+        instance.session = session;
+
+        instance.isAuth = true;
+
+        DataBase.getInstance().setUser(user);
         return instance;
+    }
+
+    public static User initTestUser(){
+        getInstance();
+        instance.fname = "Dmitriy";
+        instance.lname = "Andreevich";
+        instance.friends = "23";
+        instance.login = "TestLogin";
+        instance.nickname = "#Hennessy";
+        instance.photos = "22";
+        instance.profilePhotos = "id32";
+        instance.email = "donsy2002@gmail.com";
+        instance.id = 0;
+        instance.permissionLvl = PermissionLevel.AUTH;
+        instance.age = 20;
+        instance.contry = 3;
+        instance.city = 22;
+        instance.rating = 3;
+        instance.isUpdated = 0;
+        instance.counPhoto = 22;
+        instance.balance = 33;
+        instance.online = 1;
+        instance.isAuth = true;
+        instance.lastoOnline = new Timestamp(0);
+        instance.registration = new Timestamp(0);
+        instance.lastAuth = new Timestamp(0);
+
+        instance.session = "test";
+
+        return instance;
+    }
+
+    public static synchronized User getInstance(){
+        if(instance == null){
+            return instance = new User();
+        }else {
+            return instance;
+        }
+    }
+
+    public static boolean userIsAuth(){
+        if(instance == null){
+            getInstance();
+            return false;
+        }else {
+            return instance.isAuth;
+        }
     }
 
     public boolean isLogin() {

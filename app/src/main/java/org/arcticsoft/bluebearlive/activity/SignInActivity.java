@@ -18,6 +18,8 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.mrheadshot62.api.types.AuthRegistrationPacket;
+import com.mrheadshot62.api.types.AuthType;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKCallback;
 import com.vk.sdk.VKScope;
@@ -25,12 +27,16 @@ import com.vk.sdk.VKSdk;
 import com.vk.sdk.api.VKError;
 
 import org.arcticsoft.bluebearlive.R;
+import org.arcticsoft.bluebearlive.core.logic.PacketManager;
+import org.arcticsoft.bluebearlive.core.logic.User;
+import org.arcticsoft.bluebearlive.core.logic.Util;
 
 public class SignInActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener,
         GoogleApiClient.ConnectionCallbacks,
         View.OnClickListener{
     private static String TAG = "SINGIN";
     private static final int RC_SIGN_IN = 9001;
+    private static final int SECOND_STEP_AUTH = 3333;
 
     public static final int REQUEST_ULOGIN = 228;
     public static final String EXTRAS_ENDLESS_MODE = "EXTRAS_ENDLESS_MODE";
@@ -38,7 +44,7 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
     public static final String SOCIAL_NETWORK_TAG = "SocialIntegrationMain.SOCIAL_NETWORK_TAG";
 
     SignInActivity sing;
-    ActionProcessButton btnSignIn, btnSignOut;
+    ActionProcessButton btnSignIn, btnSignOut, testAuth;
 
     private GoogleApiClient mGoogleApiClient;
     private ProgressDialog mProgressDialog;
@@ -46,12 +52,14 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.sing_in_ac);
+        setContentView(R.layout.auth_sing_in_ac);
 
         sing = this;
 
         btnSignIn = (ActionProcessButton) findViewById(R.id.btnSignInVk);
         btnSignOut = (ActionProcessButton) findViewById(R.id.google_sign_out_button);
+        testAuth = (ActionProcessButton) findViewById(R.id.test_auth);
+
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,11 +69,24 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
             }
         });
 
+        testAuth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(User.initTestUser() != null){
+                    Util.setUserApplicationTest();
+                    startActivity(new Intent(sing, MainActivity.class));
+                }else {
+                    Toast.makeText(sing, "No Create Test User", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
         // Button listeners
         findViewById(R.id.sign_in_button).setOnClickListener(this);
         findViewById(R.id.google_sign_out_button).setOnClickListener(this);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
                 .build();
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -111,6 +132,7 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
             @Override
             public void onResult(VKAccessToken res) {
                 Toast.makeText(sing, "User is Auth VK", Toast.LENGTH_SHORT).show();
+                PacketManager.PacketGenerator(Util.getUserApplication(), new AuthRegistrationPacket(AuthType.VK, res.userId));
             }
             @Override
             public void onError(VKError error) {
@@ -129,6 +151,7 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
         if (result.isSuccess()) {
             GoogleSignInAccount acct = result.getSignInAccount();
             Toast.makeText(this, "User is Auth - "+acct.getDisplayName(), Toast.LENGTH_SHORT).show();
+            PacketManager.PacketGenerator(Util.getUserApplication(), new AuthRegistrationPacket(AuthType.GOOGLE, acct.getEmail()));
         } else {
             Toast.makeText(this, "User is no Auth ", Toast.LENGTH_SHORT).show();
         }
@@ -167,9 +190,6 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
                 break;
             case R.id.google_sign_out_button:
                 googleSignOut();
-                break;
-            case R.id.disconnect_button:
-                googleRevokeAccess();
                 break;
         }
     }

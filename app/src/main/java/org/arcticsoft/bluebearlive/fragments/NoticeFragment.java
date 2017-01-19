@@ -39,7 +39,7 @@ public class NoticeFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.main_notice, null);
+        View view = inflater.inflate(R.layout.app_main_notice, null);
         Fresco.initialize(getActivity().getApplicationContext());
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler);

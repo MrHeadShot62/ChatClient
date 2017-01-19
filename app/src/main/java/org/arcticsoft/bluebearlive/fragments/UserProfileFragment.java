@@ -25,7 +25,7 @@ public class UserProfileFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.main_profile, null);
+        view = inflater.inflate(R.layout.app_main_profile, null);
 
         mViewPager = (MaterialViewPager) view.findViewById(R.id.profile_material_view_pager);
 

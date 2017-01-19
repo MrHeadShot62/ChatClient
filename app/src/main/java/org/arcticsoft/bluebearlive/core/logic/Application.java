@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
-
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKAccessTokenTracker;
 import com.vk.sdk.VKSdk;
@@ -19,7 +18,7 @@ import org.arcticsoft.bluebearlive.activity.LoginActivity;
 public class Application extends android.app.Application{
 
     private static final String TAG = "APPLICATION";
-    private static final String SERVERIP = "194.117.253.208";
+    private static final String SERVERIP = "194.117.253.178";
 
     @Override
     public void onCreate() {
@@ -31,6 +30,7 @@ public class Application extends android.app.Application{
         } catch (Exception e) {
             e.printStackTrace();
         }
+        Util.setUserApplication();
         initDataBase();
     }
 
